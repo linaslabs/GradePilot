@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// Enums for standardized, controlled values
+enum StudyLevel {
+  UNDERGRADUATE
+  POSTGRADUATE
+}
+
+enum DegreeClassification {
+  FIRST_CLASS
+  UPPER_SECOND_CLASS
+  LOWER_SECOND_CLASS
+  THIRD_CLASS
+  PASS
+}
+
+enum YearClassification {
+  FIRST_CLASS
+  UPPER_SECOND_CLASS
+  LOWER_SECOND_CLASS
+  THIRD_CLASS
+  PASS
+}
+
+// User model for authentication and to own the data
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String // This will store the hashed password
+  degree    Degree? // A user can have one degree
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Top-level model for the user's degree
+model Degree {
+  id                   String                @id @default(cuid())
+  title                String // e.g., "Computer Science"
+  studyLevel           StudyLevel // UNDERGRADUATE or POSTGRADUATE
+  degreeType           String // e.g., "Bachelor's Degree"
+  totalLengthYears     Int // e.g., 3 or 4
+  currentYear          Int
+  targetClassification DegreeClassification? // The user's overall goal
+
+  // Establishes a one-to-one relationship with a User
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
+
+  // A degree is made up of several academic years
+  academicYears AcademicYear[]
+}
+
+// Model to store data for each year of the course, including its weighting
+model AcademicYear {
+  id                   String              @id @default(cuid())
+  yearNumber           Int // e.g., 1, 2, or 3
+  weightingPercent     Int // The % this year contributes to the final grade (e.g., 0, 40, 60)
+  targetClassification YearClassification?
+  // Establishes a many-to-one relationship with a Degree
+  degree               Degree              @relation(fields: [degreeId], references: [id])
+  degreeId             String
+
+  // An academic year contains many modules
+  modules Module[]
+}
+
+// Model for the individual modules/classes within a year
+model Module {
+  id      String @id @default(cuid())
+  name    String // e.g., "Web Development"
+  credits Int // e.g., 15 or 30
+
+  // Establishes a many-to-one relationship with an AcademicYear
+  academicYear   AcademicYear @relation(fields: [academicYearId], references: [id])
+  academicYearId String
+
+  // A module is made up of many assignments
+  assignments Assignment[]
+}
+
+// Model for the individual assignments/exams within a module
+model Assignment {
+  id               String @id @default(cuid())
+  title            String // e.g., "Coursework 1"
+  markPercent      Int? // The grade received. Optional, so null means "not yet submitted".
+  weightingPercent Int // How much this contributes to the module's final grade
+
+  // Establishes a many-to-one relationship with a Module
+  module   Module @relation(fields: [moduleId], references: [id])
+  moduleId String
+}
