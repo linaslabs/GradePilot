@@ -1,7 +1,17 @@
+.next/
 
+# General
 node_modules/
-
 .env
 
-dist/
-.next/
+# Client specific ignores (from Vite's file)
+/client/dist
+/client/dist-ssr
+/client/*.local
+/client/.env.local
+/client/.env.*.local
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
