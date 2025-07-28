@@ -1,25 +1,57 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 export default function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const submitLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = { email, password };
+    try {
+      const response = await fetch('http://127.0.0.1:3000/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message);
+      }
+
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('An unexpected error occurred... Try again later');
+      }
+    }
+  };
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-6 pb-40">
       <h1 className="text-6xl font-bold">Login</h1>
-      <form className="flex w-100 flex-col gap-4">
+      <form className="flex w-100 flex-col gap-4" onSubmit={submitLogin}>
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
-          <Input id="email" />
+          <Input type="email" id="email" onChange={(e) => setEmail(e.target.value)} />
         </div>
         <div className="space-y-2">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" />
+          <Input type="password" id="password" onChange={(e) => setPassword(e.target.value)} />
         </div>
         <Button type="submit">Login</Button>
       </form>
+      <p className='text-red-400'>{error}</p>
       <p>
-        Don't have an account?{" "}
+        Don't have an account?{' '}
         <a href="" className="font-bold">
           Sign up
         </a>

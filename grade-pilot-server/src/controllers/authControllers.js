@@ -41,6 +41,10 @@ export const login = async (req, res) => {
 export const registration = async (req, res) => {
   const { name, email, password } = req.body;
 
+  if (!name || !email || !password) {
+    throw new BadRequestError("Please fill out all the fields");
+  }
+
   // Check if user is present in database already
   const user = await prisma.user.findUnique({
     where: { email: email },
