@@ -42,7 +42,38 @@
 }
 
 :root {
+  /* Your new :root block in index.css using hex codes */
+  --background: #131b23; /* Your background */
+  --foreground: #E9F1F7; /* Your text */
+
+  --card: var(--background);
+  --card-foreground: var(--foreground);
+
+  --popover: var(--background);
+  --popover-foreground: var(--foreground);
+
+  --primary: #E7DFC6; /* Your primary */
+  --primary-foreground: #131b23; /* Your background for contrast */
+
+  --secondary: #2274A5; /* Your secondary */
+  --secondary-foreground: #E9F1F7; /* Your text for contrast */
+
+  --accent: #816C61; /* Your accent */
+  --accent-foreground: #E9F1F7;
+
+  /* Sensible defaults for the rest */
+  --muted: hsl(240 5% 34%);
+  --muted-foreground: hsl(240 5% 65%);
+
+  --destructive: hsl(0 63% 31%);
+  --destructive-foreground: hsl(0 86% 97%);
+
+  --border: hsl(240 4% 16%);
+  --input: hsl(240 4% 16%);
+  --ring: #E7DFC6; /* Your primary color for focus rings */
+
   --radius: 0.625rem;
+  /* --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);
   --card: oklch(1 0 0);
@@ -73,7 +104,7 @@
   --sidebar-accent: oklch(0.968 0.007 247.896);
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
   --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
+  --sidebar-ring: oklch(0.704 0.04 256.788); */
 }
 
 .dark {
@@ -118,3 +149,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* @layer utilities {
+  .flex-center {
+    @apply flex flex-col items-center justify-center min-h-screen
+  }
+} */
