@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
+import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const submitLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,6 +31,8 @@ export default function Login() {
         throw new Error(data.message);
       }
 
+      login(data.user, data.token);
+      navigate('/dashboard');
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -41,15 +48,25 @@ export default function Login() {
       <form className="flex w-100 flex-col gap-4" onSubmit={submitLogin}>
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
-          <Input type="email" id="email" onChange={(e) => setEmail(e.target.value)} />
+          <Input
+            type="email"
+            id="email"
+            autoComplete="email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="password">Password</Label>
-          <Input type="password" id="password" onChange={(e) => setPassword(e.target.value)} />
+          <Input
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
         <Button type="submit">Login</Button>
       </form>
-      <p className='text-red-400'>{error}</p>
+      <p className="text-red-400">{error}</p>
       <p>
         Don't have an account?{' '}
         <a href="" className="font-bold">

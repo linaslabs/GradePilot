@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useAuth } from '@/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const submitRegistration = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,7 +32,8 @@ export default function Register() {
         throw new Error(data.message);
       }
 
-      console.log(data);
+      login(data.user, data.token);
+      navigate('/onboarding');
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -46,6 +52,7 @@ export default function Register() {
           <Input
             type="text"
             id="name"
+            autoComplete="name"
             onChange={(e) => setName(e.target.value)}
           />
         </div>
@@ -54,6 +61,7 @@ export default function Register() {
           <Input
             type="email"
             id="email"
+            autoComplete="email"
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
@@ -62,6 +70,7 @@ export default function Register() {
           <Input
             type="password"
             id="password"
+            autoComplete="new-password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
