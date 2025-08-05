@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
+import { useAuth } from '@/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 
+interface YearData {
+  yearNumber: number;
+  weightingPercent: number;
+  targetClassification?: string;
+}
+
 interface OnboardingPayload {
   title: string;
   studyLevel: string;
   degreeType: string;
-  totalLengthYears: number;
+  yearData: YearData[];
   currentYear: number;
   targetDegreeClassification?: string; // The '?' makes this property optional
 }
@@ -22,6 +30,9 @@ export default function Onboarding() {
   const [targetDegreeClassification, setTargetDegreeClassification] =
     useState('');
   const [error, setError] = useState('');
+
+  const { token } = useAuth();
+  const navigate = useNavigate();
 
   const submitOnboarding = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,11 +48,21 @@ export default function Onboarding() {
       return; // Stops function
     }
 
+    // Populating the yearData - ADD YEAR WEIGHTING COMPILATION HERE TOO WHEN FUNCTIONALITY IS ADDED
+    const yearData = [];
+    for (let index = 0; index < totalLengthYears; index++) {
+      yearData[index] = {
+        yearNumber: index + 1,
+        weightingPercent: 10, // PLACEHOLDER VALUE
+        targetClassification: undefined,
+      };
+    }
+
     const formData: OnboardingPayload = {
       title,
       studyLevel,
       degreeType,
-      totalLengthYears,
+      yearData,
       currentYear,
     };
 
@@ -54,7 +75,7 @@ export default function Onboarding() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          authorization: 'Bearer ', // NEED TO ADD AUTH
+          authorization: `Bearer ${token}`, // NEED TO ADD AUTH
         },
         body: JSON.stringify(formData),
       });
@@ -62,10 +83,14 @@ export default function Onboarding() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message);
+        throw new Error(
+          data.customMessage ||
+            'An unexpected error occured... Try again later',
+        );
       }
 
       console.log(response);
+      navigate('/dashboard');
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);

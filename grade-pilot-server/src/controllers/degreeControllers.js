@@ -8,7 +8,7 @@ export const getDegree = async (req, res) => {
     where: {
       userId: req.user.userId,
     },
-    
+
     include: {
       academicYears: {
         include: {
@@ -52,11 +52,13 @@ export const createDegree = async (req, res) => {
       targetClassification: targetClassification,
 
       user: {
-        connect: req.user.userId,
+        connect: {
+          id: req.user.userId,
+        },
       },
 
       academicYears: {
-        create: yearData,
+        create: yearData, // Need to add year weightings when compiling the yearData
       },
     },
   });
@@ -67,7 +69,6 @@ export const createDegree = async (req, res) => {
 export const updateDegree = async (req, res) => {
   // Mostly for changing academic year (e.g. moving from 4 year to 3 year - which means an academic year would need to be deleted)
   // More complex
-
   // const { newDegreeLength} = req.body
   // const degree = await prisma.degree.update({
   //   where: {
