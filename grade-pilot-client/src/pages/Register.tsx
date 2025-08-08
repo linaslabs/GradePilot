@@ -6,6 +6,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,7 +19,7 @@ export default function Register() {
     e.preventDefault();
     const formData = { name, email, password };
     try {
-      const response = await fetch('http://127.0.0.1:3000/api/auth/register', {
+      const response = await fetch(`${apiUrl}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -29,14 +30,18 @@ export default function Register() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message);
+        throw new Error(
+          data.customMessage || // Server sends back a custom message if its one the user needs to visually see
+            'An unexpected error occured... Try again later',
+        );
       }
+      
 
       login(data.user, data.token);
       navigate('/onboarding');
     } catch (error) {
       if (error instanceof Error) {
-        setError(error.message);
+        setError(error.message); /// This also catches front end errors and displays them to the user. Front-end should be secure though so no worries.
       } else {
         setError('An unexpected error occurred... Try again later');
       }

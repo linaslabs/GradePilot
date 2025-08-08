@@ -22,6 +22,7 @@ interface OnboardingPayload {
 }
 
 export default function Onboarding() {
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const [studyLevel, setStudyLevel] = useState('');
   const [title, setTitle] = useState('');
   const [degreeType, setDegreeType] = useState('');
@@ -71,11 +72,11 @@ export default function Onboarding() {
     }
 
     try {
-      const response = await fetch('http://127.0.0.1:3000/api/degree', {
+      const response = await fetch(`${apiUrl}/degree`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          authorization: `Bearer ${token}`, // NEED TO ADD AUTH
+          authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(formData),
       });
@@ -89,7 +90,6 @@ export default function Onboarding() {
         );
       }
 
-      console.log(response);
       navigate('/dashboard');
     } catch (error) {
       if (error instanceof Error) {

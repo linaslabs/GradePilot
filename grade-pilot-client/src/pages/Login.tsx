@@ -6,6 +6,8 @@ import { Label } from '@/components/ui/label';
 import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -17,7 +19,7 @@ export default function Login() {
     e.preventDefault();
     const formData = { email, password };
     try {
-      const response = await fetch('http://127.0.0.1:3000/api/auth/login', {
+      const response = await fetch(`${apiUrl}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -28,7 +30,10 @@ export default function Login() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message);
+        throw new Error(
+          data.customMessage ||
+            'An unexpected error occured... Try again later',
+        );
       }
 
       login(data.user, data.token);

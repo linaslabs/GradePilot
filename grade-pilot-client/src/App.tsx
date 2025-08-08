@@ -1,20 +1,28 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Onboarding from './pages/Onboarding';
+import DashboardLayout from './pages/DashboardLayout';
+import Overview from './pages/Overview';
+import YearDetails from './pages/YearDetails';
 import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
   return (
-      <AuthProvider>
-        <Router>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/onboarding" element={<Onboarding />} />
-          </Routes>
-        </Router>
-      </AuthProvider>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route path= "" element={<Navigate to="/dashboard/overview" replace/>}/> { /* If nothing is added after "/dashboard" URI, then redirected to "overview"*/}
+            <Route path="overview" element={<Overview />} />
+            <Route path="year/:id" element={<YearDetails />} />
+          </Route>
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
