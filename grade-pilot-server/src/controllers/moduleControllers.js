@@ -1,12 +1,17 @@
 import prisma from "../lib/prisma.js";
 
 export const createModule = async (req, res) => {
-  const { name, credits, academicYearId } = req.body;
+  const { name, credits, moduleCode, targetMark, academicYearId } = req.body;
   const newModule = await prisma.module.create({
     data: {
       name: name,
       credits: credits,
+      moduleCode: moduleCode,
+      targetMark: targetMark,
       academicYearId: academicYearId,
+    },
+    include: {
+      assignments: true,
     },
   });
 

@@ -1,5 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Varela+Round&display=swap');
 @import 'tailwindcss';
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -42,9 +43,9 @@
 }
 
 :root {
-  /* Your new :root block in index.css using hex codes */
-  --background: #131b23; /* Your background */
-  --foreground: #E9F1F7; /* Your text */
+  /* new :root block in index.css using hex codes */
+  --background: #131b23; /* background */
+  --foreground: #e9f1f7; /* text */
 
   --card: var(--background);
   --card-foreground: var(--foreground);
@@ -52,14 +53,14 @@
   --popover: var(--background);
   --popover-foreground: var(--foreground);
 
-  --primary: #E7DFC6; /* Your primary */
-  --primary-foreground: #131b23; /* Your background for contrast */
+  --primary: #e7dfc6; /* primary */
+  --primary-foreground: #131b23; /* background for contrast */
 
-  --secondary: #2274A5; /* Your secondary */
-  --secondary-foreground: #E9F1F7; /* Your text for contrast */
+  --secondary: #2274a5; /* secondary */
+  --secondary-foreground: #e9f1f7; /* text for contrast */
 
-  --accent: #816C61; /* Your accent */
-  --accent-foreground: #E9F1F7;
+  --accent: #816c61; /* accent */
+  --accent-foreground: #e9f1f7;
 
   /* Sensible defaults for the rest */
   --muted: hsl(240 5% 34%);
@@ -70,9 +71,11 @@
 
   --border: hsl(240 4% 16%);
   --input: hsl(240 4% 16%);
-  --ring: #E7DFC6; /* Your primary color for focus rings */
+  --ring: #e7dfc6; /* primary color for focus rings */
 
   --radius: 0.625rem;
+
+  --slightlyBig: 1.25rem;
   /* --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);
@@ -155,6 +158,16 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Poppins', sans-serif;
+  }
+  h1 {
+    @apply text-5xl;
+  }
+  h2 {
+    @apply text-3xl;
+  }
+  h3 {
+    font-size: 22px;
   }
 }
 

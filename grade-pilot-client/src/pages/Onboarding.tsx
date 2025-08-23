@@ -135,6 +135,7 @@ export default function Onboarding() {
           </Label>
           <Input
             type="text"
+            value={title}
             id="degreeTitle"
             onChange={(e) => setTitle(e.target.value)}
           />
@@ -219,10 +220,10 @@ export default function Onboarding() {
             <ToggleGroupItem value="FIRST_CLASS">First</ToggleGroupItem>
           </ToggleGroup>
         </div>
-        <p className="text-center text-red-400">{error}</p>
+        {error && <p className="text-red-400">{error}</p>}
+
         <Button type="submit">Finish</Button>
       </form>
-      <p className="text-red-400">{}</p>
     </div>
   );
 }

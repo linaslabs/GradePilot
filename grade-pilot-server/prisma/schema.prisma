@@ -44,10 +44,10 @@ model User {
 // Top-level model for the user's degree
 model Degree {
   id                   String                @id @default(cuid())
-  title                String // e.g., "Computer Science"
+  title                String // e.g. "Computer Science"
   studyLevel           StudyLevel // UNDERGRADUATE or POSTGRADUATE
-  degreeType           String // e.g., "Bachelor's Degree"
-  totalLengthYears     Int // e.g., 3 or 4
+  degreeType           String // e.g. "Bachelor's Degree"
+  totalLengthYears     Int
   currentYear          Int
   targetClassification DegreeClassification? // The user's overall goal
 
@@ -62,7 +62,7 @@ model Degree {
 // Model to store data for each year of the course, including its weighting
 model AcademicYear {
   id                   String              @id @default(cuid())
-  yearNumber           Int // e.g., 1, 2, or 3
+  yearNumber           Int
   weightingPercent     Int // The % this year contributes to the final grade (e.g., 0, 40, 60)
   targetClassification YearClassification?
   // Establishes a many-to-one relationship with a Degree
@@ -75,9 +75,12 @@ model AcademicYear {
 
 // Model for the individual modules/classes within a year
 model Module {
-  id      String @id @default(cuid())
-  name    String // e.g., "Web Development"
-  credits Int // e.g., 15 or 30
+  id         String  @id @default(cuid())
+  name       String // e.g. "Web Development"
+  moduleCode String? // e.g. "CS130"
+  // current mark will be calculated on display
+  targetMark Int? // e.g. 40 (pass) for the module
+  credits    Int
 
   // Establishes a many-to-one relationship with an AcademicYear
   academicYear   AcademicYear @relation(fields: [academicYearId], references: [id])
@@ -90,9 +93,9 @@ model Module {
 // Model for the individual assignments/exams within a module
 model Assignment {
   id               String @id @default(cuid())
-  title            String // e.g., "Coursework 1"
+  title            String // e.g. "Coursework 1"
   markPercent      Int? // The grade received. Optional, so null means "not yet submitted".
-  weightingPercent Int // How much this contributes to the module's final grade
+  weightingPercent Int
 
   // Establishes a many-to-one relationship with a Module
   module   Module @relation(fields: [moduleId], references: [id])

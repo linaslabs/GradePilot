@@ -55,6 +55,7 @@ export default function Login() {
           <Label htmlFor="email">Email</Label>
           <Input
             type="email"
+            value={email}
             id="email"
             autoComplete="email"
             onChange={(e) => setEmail(e.target.value)}
@@ -64,6 +65,7 @@ export default function Login() {
           <Label htmlFor="password">Password</Label>
           <Input
             type="password"
+            value={password}
             id="password"
             autoComplete="current-password"
             onChange={(e) => setPassword(e.target.value)}
@@ -71,7 +73,7 @@ export default function Login() {
         </div>
         <Button type="submit">Login</Button>
       </form>
-      <p className="text-red-400">{error}</p>
+      {error && <p className="text-red-400">{error}</p>}
       <p>
         Don't have an account?{' '}
         <a href="" className="font-bold">

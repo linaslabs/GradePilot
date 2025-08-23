@@ -35,7 +35,6 @@ export default function Register() {
             'An unexpected error occured... Try again later',
         );
       }
-      
 
       login(data.user, data.token);
       navigate('/onboarding');
@@ -57,6 +56,7 @@ export default function Register() {
           <Input
             type="text"
             id="name"
+            value={name}
             autoComplete="name"
             onChange={(e) => setName(e.target.value)}
           />
@@ -66,6 +66,7 @@ export default function Register() {
           <Input
             type="email"
             id="email"
+            value={email}
             autoComplete="email"
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -75,13 +76,15 @@ export default function Register() {
           <Input
             type="password"
             id="password"
+            value={password}
             autoComplete="new-password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <Button type="submit">Register</Button>
       </form>
-      <p className="text-red-400">{error}</p>
+      {error && <p className="text-red-400">{error}</p>}
+
       <p>
         Already have an account?{' '}
         <a href="" className="font-bold">

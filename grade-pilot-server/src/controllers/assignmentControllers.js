@@ -35,7 +35,8 @@ export const updateAssignment = async (req, res) => {
   if (title) {
     updatingData.title = title;
   }
-  if (markPercent !== undefined) { // Allows setting of 0%
+  if (markPercent !== undefined) {
+    // Allows setting of 0%
     updatingData.markPercent = markPercent;
   }
   if (weightingPercent) {

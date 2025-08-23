@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Onboarding from './pages/Onboarding';
@@ -16,8 +21,16 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/dashboard" element={<DashboardLayout />}>
-            <Route path= "" element={<Navigate to="/dashboard/overview" replace/>}/> { /* If nothing is added after "/dashboard" URI, then redirected to "overview"*/}
+            <Route
+              path=""
+              element={<Navigate to="/dashboard/overview" replace />}
+            />{' '}
+            {/* If nothing is added after "/dashboard" URI, then redirected to "overview"*/}
             <Route path="overview" element={<Overview />} />
+            <Route
+              path="year"
+              element={<Navigate to="/dashboard/overview" replace />}
+            />
             <Route path="year/:id" element={<YearDetails />} />
           </Route>
         </Routes>
