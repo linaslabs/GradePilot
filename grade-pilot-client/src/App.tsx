@@ -27,8 +27,9 @@ function App() {
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route
               path=""
-              element={<Navigate to="/dashboard/overview" replace />}
+              element={<Navigate to="/dashboard/year/1" replace />}
             />{' '}
+            {/* For now redirect to first year dashboard, whilst overview page is WIP */}
             {/* If nothing is added after "/dashboard" URI, then redirected to "overview"*/}
             <Route path="overview" element={<Overview />} />
             <Route

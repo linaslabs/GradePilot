@@ -41,5 +41,10 @@ export default function Overview() {
     fetchDegree();
   }, []);
 
-  return <>{error}</>;
+  return (
+    <>
+      Coming soon!
+      {error}
+    </>
+  );
 }
