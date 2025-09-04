@@ -87,7 +87,7 @@ export default function Register() {
 
       <p>
         Already have an account?{' '}
-        <a href="" className="font-bold">
+        <a href="/login" className="font-bold">
           Log in
         </a>
       </p>

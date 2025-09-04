@@ -76,7 +76,7 @@ export default function Login() {
       {error && <p className="text-red-400">{error}</p>}
       <p>
         Don't have an account?{' '}
-        <a href="" className="font-bold">
+        <a href="/register" className="font-bold">
           Sign up
         </a>
       </p>
