@@ -11,12 +11,15 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const submitLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    setIsSubmitting(true);
     const formData = { email, password };
     try {
       const response = await fetch(`${apiUrl}/auth/login`, {
@@ -44,6 +47,8 @@ export default function Login() {
       } else {
         setError('An unexpected error occurred... Try again later');
       }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -71,7 +76,9 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <Button type="submit">Login</Button>
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Logging in...' : 'Login'}
+        </Button>
       </form>
       {error && <p className="text-red-400">{error}</p>}
       <p>
