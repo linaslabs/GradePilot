@@ -17,8 +17,8 @@
 
     /* Linting */
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedLocals": false, // FOR NOW NO TS WARNINGS WHEN UNUSED
+    "noUnusedParameters": false,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
@@ -29,6 +29,5 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"],
-  
+  "include": ["src"]
 }
