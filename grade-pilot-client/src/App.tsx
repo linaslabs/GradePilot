@@ -36,8 +36,8 @@ function App() {
               element={<Navigate to="/dashboard/overview" replace />}
             />
             <Route path="year/:id" element={<YearDetails />} />
-            <Route path="*" element={<NotFound />} />
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </AuthProvider>
