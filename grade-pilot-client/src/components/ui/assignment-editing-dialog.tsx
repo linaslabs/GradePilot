@@ -44,7 +44,8 @@ export default function AssignmentEditingDialog({
   const [currentCompletionStatus, setCurrentCompletionStatus] =
     useState('Incomplete');
   const totalCurrentModuleWeight = moduleData
-    ? calculateModuleWeights(moduleData?.assignments)
+    ? calculateModuleWeights(moduleData?.assignments) -
+      (assignmentData ? assignmentData?.weightingPercent : 0)
     : 0;
   const [formError, setFormError] = useState('');
   const [completeMarkError, setCompleteMarkError] = useState('');

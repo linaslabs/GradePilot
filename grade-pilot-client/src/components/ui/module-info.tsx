@@ -90,7 +90,7 @@ export default function ModuleInfo({ module, assignments }: ModuleInfoProp) {
         </div>
         <div
           // If requirement to reach target module mark is null, it is achieved, -1, it is achieved but it was never set, Infinity, it is not possible
-          className={`col-span-4 mr-2 flex flex-col items-center justify-center rounded-sm ${pilotResponseObject.reqAvgMarkTarget === null || pilotResponseObject.reqAvgMarkTarget === -1 ? 'bg-green-600' : 'bg-red-600'} pt-2 pr-5 pb-2 pl-5 text-white`}
+          className={`col-span-4 mr-2 flex flex-col items-center justify-center rounded-sm ${pilotResponseObject.reqAvgMarkTarget === null ? 'bg-green-600' : pilotResponseObject.reqAvgMarkTarget === -1 ? 'bg-gray-600' : 'bg-red-600'} pt-2 pr-5 pb-2 pl-5 text-white`}
         >
           <span className="text-[14px]">Target Module Mark:</span>
           <span className="text-[22px]">

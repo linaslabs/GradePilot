@@ -120,7 +120,7 @@ export default function PilotTip({
             <span className="font-bold text-red-600">
               This is no longer possible to achieve
             </span>
-          ) : requiredMark < 100 ? (
+          ) : requiredMark < 0 ? (
             'You have no target mark!'
           ) : (
             <p>
