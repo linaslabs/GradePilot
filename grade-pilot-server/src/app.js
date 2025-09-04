@@ -22,7 +22,7 @@ app.use(helmet());
 app.use(cors());
 
 app.get("/", (req, res) => {
-  res.send("HELLO WORLD");
+  res.send("This is the grade pilot server");
 });
 
 app.use("/api", apiRouter);
