@@ -43,11 +43,8 @@ export default function Register() {
       login(data.user, data.token);
       navigate('/onboarding');
     } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message); /// This also catches front end errors and displays them to the user. Front-end should be secure though so no worries.
-      } else {
-        setError('An unexpected error occurred... Try again later');
-      }
+      console.error(error);
+      setError('An unexpected error occurred... Try again later');
     } finally {
       setIsSubmitting(false);
     }
