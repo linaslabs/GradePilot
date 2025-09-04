@@ -11,7 +11,7 @@ import DashboardLayout from './pages/DashboardLayout';
 import Overview from './pages/Overview';
 import YearDetails from './pages/YearDetails';
 import { AuthProvider } from './contexts/AuthContext';
-import { Analytics } from '@vercel/analytics/next';
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   return (
