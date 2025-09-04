@@ -17,9 +17,14 @@ app.use(
   })
 );
 
-app.use(express.json());
+const corsOptions = {
+  origin: process.env.FRONTEND_URL,
+  optionsSuccessStatus: 200, // for legacy browsers
+};
+
+app.use(cors(corsOptions));
 app.use(helmet());
-app.use(cors());
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("This is the grade pilot server");
