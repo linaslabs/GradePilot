@@ -1,6 +1,7 @@
 import React from 'react';
 import type { AssignmentType, Module } from '@/types';
 import { calculatePilotResponse } from '@/utils/calculations';
+import { gradeFormatter } from '@/utils/formatting';
 import PilotTip from './pilotTip';
 
 interface ModuleInfoProp {
@@ -57,7 +58,9 @@ export default function ModuleInfo({ module, assignments }: ModuleInfoProp) {
           </span>
         </div>
         <div className="col-span-4 mr-2 flex flex-col items-center rounded-sm bg-gray-600 pt-2 pr-5 pb-2 pl-5 text-white">
-          <span className="text-[12px]">Year Weighting: {module.credits}%</span>
+          <span className="text-[12px]">
+            Year Weighting: {gradeFormatter((module.credits / 120) * 100)}%
+          </span>
         </div>
 
         <div
