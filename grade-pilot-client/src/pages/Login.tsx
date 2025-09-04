@@ -42,8 +42,11 @@ export default function Login() {
       login(data.user, data.token);
       navigate('/dashboard');
     } catch (error) {
-      console.error(error);
-      setError('An unexpected error occurred... Try again later');
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('An unexpected error occurred... Try again later');
+      }
     } finally {
       setIsSubmitting(false);
     }
