@@ -110,9 +110,7 @@ export default function Onboarding() {
         onSubmit={submitOnboarding}
       >
         <div className="space-y-2">
-          <Label className="text-0.5xl" htmlFor="studyLevel">
-            What is your study level?
-          </Label>
+          <Label className="text-0.5xl">What is your study level?</Label>
           <ToggleGroup
             onValueChange={(value) => {
               if (value) setStudyLevel(value);
@@ -120,7 +118,6 @@ export default function Onboarding() {
             variant="outline"
             type="single"
             className="w-full"
-            id="studyLevel"
           >
             <ToggleGroupItem value="UNDERGRADUATE">
               Undergraduate
@@ -129,21 +126,19 @@ export default function Onboarding() {
           </ToggleGroup>
         </div>
         <div className="space-y-2">
-          <Label className="text-0.5xl" htmlFor="degreeTitle">
+          <Label className="text-0.5xl" htmlFor="onboarding-degreeTitle">
             What is your degree subject/title?{' '}
             <span className="text-gray-400"> E.g. "Computer Science"</span>
           </Label>
           <Input
             type="text"
             value={title}
-            id="degreeTitle"
+            id="onboarding-degreeTitle"
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
         <div className="space-y-2">
-          <Label className="text-0.5xl" htmlFor="degreeType">
-            What is your degree type?
-          </Label>
+          <Label className="text-0.5xl">What is your degree type?</Label>
           <ToggleGroup
             onValueChange={(value) => {
               if (value) setDegreeType(value);
@@ -151,7 +146,6 @@ export default function Onboarding() {
             variant="outline"
             type="single"
             className="w-full"
-            id="degreeType"
           >
             <ToggleGroupItem value="Batchelors">Bachelors </ToggleGroupItem>
             <ToggleGroupItem value="Masters">Masters</ToggleGroupItem>
@@ -160,14 +154,13 @@ export default function Onboarding() {
           </ToggleGroup>
         </div>
         <div className="space-y-2">
-          <Label className="text-0.5xl" htmlFor="degreeLength">
+          <Label className="text-0.5xl">
             How many years do you want to track?
           </Label>
           <ToggleGroup
             variant="outline"
             type="single"
             className="w-full"
-            id="degreeLength"
             onValueChange={(value) => {
               if (value) setTotalLengthYears(Number(value));
             }}
@@ -180,14 +173,11 @@ export default function Onboarding() {
           </ToggleGroup>
         </div>
         <div className="space-y-2">
-          <Label className="text-0.5xl" htmlFor="currentYear">
-            What is your current year?
-          </Label>
+          <Label className="text-0.5xl">What is your current year?</Label>
           <ToggleGroup
             variant="outline"
             type="single"
             className="w-full"
-            id="currentYear"
             onValueChange={(value) => {
               if (value) setCurrentYear(Number(value));
             }}
@@ -200,7 +190,7 @@ export default function Onboarding() {
           </ToggleGroup>
         </div>
         <div className="space-y-2">
-          <Label className="text-0.5xl" htmlFor="targetDegreeClassification">
+          <Label className="text-0.5xl">
             Choose your target degree classification{' '}
             <span className="text-gray-400">(Optional)</span>
           </Label>
@@ -208,7 +198,6 @@ export default function Onboarding() {
             variant="outline"
             type="single"
             className="w-full"
-            id="targetDegreeClassification"
             onValueChange={(value) => {
               if (value) setTargetDegreeClassification(value);
             }}

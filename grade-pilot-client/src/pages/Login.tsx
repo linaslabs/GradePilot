@@ -52,17 +52,17 @@ export default function Login() {
       <h1 className="text-6xl font-bold">Login</h1>
       <form className="flex w-100 flex-col gap-4" onSubmit={submitLogin}>
         <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="login-email">Email</Label>
           <Input
             type="email"
             value={email}
-            id="email"
+            id="login-email"
             autoComplete="email"
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="login-password">Password</Label>
           <Input
             type="password"
             value={password}

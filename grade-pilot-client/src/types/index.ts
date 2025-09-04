@@ -26,3 +26,4 @@ export interface AcademicYearData {
   targetClassification?: string;
   modules: Module[];
 }
+

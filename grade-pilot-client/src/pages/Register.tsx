@@ -52,30 +52,30 @@ export default function Register() {
       <h1 className="text-6xl font-bold">Sign Up</h1>
       <form className="flex w-100 flex-col gap-4" onSubmit={submitRegistration}>
         <div className="space-y-2">
-          <Label htmlFor="name"> Full Name</Label>
+          <Label htmlFor="register-name"> Full Name</Label>
           <Input
             type="text"
-            id="name"
+            id="register-name"
             value={name}
             autoComplete="name"
             onChange={(e) => setName(e.target.value)}
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="register-email">Email</Label>
           <Input
             type="email"
-            id="email"
+            id="register-email"
             value={email}
             autoComplete="email"
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="register-password">Password</Label>
           <Input
             type="password"
-            id="password"
+            id="register-password"
             value={password}
             autoComplete="new-password"
             onChange={(e) => setPassword(e.target.value)}

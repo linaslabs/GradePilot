@@ -11,8 +11,22 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogDescription,
 } from '@/components/ui/dialog';
-import type { AcademicYearData, AssignmentType } from '@/types';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import ModuleEditingDialog from '@/components/ui/module-editing-dialog';
+import AssignmentEditingDialog from '@/components/ui/assignment-editing-dialog';
+import type { AcademicYearData, AssignmentType, Module } from '@/types';
 interface formData {
   name: string;
   credits: number;
@@ -30,7 +44,26 @@ export default function YearDetails() {
   const [moduleCredits, setModuleCredits] = useState('');
   const [moduleTargetMark, setModuleTargetMark] = useState('');
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // MODULE
+  const [isAddModuleModalOpen, setIsAddModuleModalOpen] = useState(false);
+  const [isEditingModuleModalOpen, setIsEditingModuleModalOpen] =
+    useState(false);
+  const [moduleOfEditingAssignment, setModuleOfEditingAssignment] =
+    useState<Module | null>(null);
+  const [editingModule, setEditingModule] = useState<Module | null>(null);
+
+  // ASSIGNMENT
+  const [isEditingAssignmentModalOpen, setIsEditingAssignmentModalOpen] =
+    useState(false);
+  const [editingAssignment, setEditingAssignment] =
+    useState<AssignmentType | null>(null);
+  const [assignmentToDelete, setAssignmentToDelete] =
+    useState<AssignmentType | null>(null);
+  const [assignmentDeleteError, setAssignmentDeleteError] = useState('');
+  const [isDeleteAssignmentSubmitting, setIsDeleteAssignmentSubmitting] =
+    useState(false);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [formError, setFormError] = useState('');
@@ -74,9 +107,12 @@ export default function YearDetails() {
       // If statement to remove typescript error as yearInfo could be null
       e.preventDefault();
 
+      setIsSubmitting(true);
+
       if (!moduleTitle || !moduleCredits) {
         // Could instead throw error and handle in error handler? need to check if modal is open and type "error"
         setFormError('Please fill in all required fields');
+        setIsSubmitting(false);
         return;
       }
 
@@ -121,43 +157,145 @@ export default function YearDetails() {
           };
         });
 
-        setIsModalOpen(false);
-        console.log(data);
+        modalOpenChangeHandler(false); // Clears state
       } catch (error) {
         if (error instanceof Error) {
-          setError(error.message);
+          setFormError(error.message); // Could this be setError instead?
         } else {
-          setError('An unexpected error occurred... Try again later');
+          setFormError('An unexpected error occurred... Try again later');
         }
+      } finally {
+        setIsSubmitting(false);
       }
     }
   };
 
-  const submitNewAssignment = (
-    moduleId: string,
-    newAssignment: AssignmentType,
-  ) => {
-    if (yearInfo) {
-      setYearInfo((currentYearInfo) => {
-        if (!currentYearInfo) return null;
+  const addAssignment = (moduleId: string, newAssignment: AssignmentType) => {
+    setYearInfo((currentYearInfo) => {
+      if (!currentYearInfo) return null;
+      return {
+        ...currentYearInfo,
+        modules: currentYearInfo.modules.map((module) => {
+          if (module.id == moduleId) {
+            return {
+              ...module,
+              assignments: [...module.assignments, newAssignment],
+            };
+          }
+          return module;
+        }),
+      };
+    });
+  };
+
+  const deleteModule = (moduleId: string) => {
+    setYearInfo((currentYearInfo) => {
+      if (!currentYearInfo) return null;
+      const updatedModules = currentYearInfo.modules.filter(
+        (module) => module.id !== moduleId,
+      );
+
+      return {
+        ...currentYearInfo,
+        modules: updatedModules,
+      };
+    });
+  };
+
+  const updateModule = (updatedModule: Module) => {
+    setYearInfo((currentYearInfo) => {
+      if (!currentYearInfo) return null;
+      const updatedModules = currentYearInfo.modules.map((module) => {
+        if (module.id === updatedModule.id) {
+          return updatedModule;
+        }
+        return module;
+      });
+
+      return {
+        ...currentYearInfo,
+        modules: updatedModules,
+      };
+    });
+
+    setIsEditingModuleModalOpen(false);
+  };
+
+  const updateAssignment = (updatedAssignment: AssignmentType) => {
+    setYearInfo((currentYearInfo) => {
+      if (!currentYearInfo) return null;
+      const updatedModules = currentYearInfo.modules.map((module) => {
+        const updatedAssigments = module.assignments.map((assignment) => {
+          if (assignment.id === updatedAssignment.id) {
+            return updatedAssignment;
+          }
+          return assignment;
+        });
+
         return {
-          ...currentYearInfo,
-          modules: currentYearInfo.modules.map((module) => {
-            if (module.id == moduleId) {
-              return {
-                ...module,
-                assignments: [...module.assignments, newAssignment],
-              };
-            }
-            return module;
-          }),
+          ...module,
+          assignments: updatedAssigments,
         };
       });
+
+      return {
+        ...currentYearInfo,
+        modules: updatedModules,
+      };
+    });
+
+    setIsEditingAssignmentModalOpen(false);
+  };
+
+  const deleteAssignment = (assignmentId: string) => {
+    setYearInfo((currentYearInfo) => {
+      if (!currentYearInfo) return null;
+      const updatedModules = currentYearInfo.modules.map((module) => {
+        const updatedAssignments = module.assignments.filter(
+          (assignment) => assignment.id !== assignmentId,
+        );
+
+        return {
+          ...module,
+          assignments: updatedAssignments,
+        };
+      });
+      return {
+        ...currentYearInfo,
+        modules: updatedModules,
+      };
+    });
+  };
+
+  const handleDeleteAssignment = async () => {
+    setIsDeleteAssignmentSubmitting(true);
+    try {
+      if (assignmentToDelete) {
+        // Guaranteed to be true as long as dialogue only opens when this exists
+        await fetch(`${apiUrl}/assignment/${assignmentToDelete.id}`, {
+          method: 'DELETE',
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        });
+
+        deleteAssignment(assignmentToDelete.id);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        setAssignmentDeleteError(error.message);
+      } else {
+        setAssignmentDeleteError(
+          'This aasignment could not be deleted... Try again later',
+        );
+      }
+    } finally {
+      setIsDeleteAssignmentSubmitting(false);
     }
   };
 
   const modalOpenChangeHandler = (isOpen: boolean) => {
-    setIsModalOpen(isOpen);
+    setIsAddModuleModalOpen(isOpen);
 
     if (!isOpen) {
       setModuleTitle('');
@@ -183,59 +321,84 @@ export default function YearDetails() {
         <main className="flex w-[70vw] flex-col items-start pr-7">
           {yearInfo && yearInfo.modules.length > 0 ? (
             yearInfo.modules.map((module) => (
-              <section className="flex gap-2">
-                <ModuleAccordion
-                  key={module.id}
-                  module={module}
-                  assignmentFunction={submitNewAssignment}
-                />
-              </section>
+              <ModuleAccordion
+                key={module.id}
+                module={module}
+                assignmentAddFunction={addAssignment}
+                moduleDeleteFunction={deleteModule}
+                editModuleFunction={() => {
+                  setIsEditingModuleModalOpen(true);
+                  setEditingModule(module);
+                }}
+                editAssignmentFunction={(
+                  currentAssignment: AssignmentType,
+                  currentModule: Module,
+                ) => {
+                  setIsEditingAssignmentModalOpen(true);
+                  setEditingAssignment(currentAssignment);
+                  setModuleOfEditingAssignment(currentModule);
+                }}
+                deleteAssignmentFunction={(assignment: AssignmentType) =>
+                  setAssignmentToDelete(assignment)
+                }
+              />
             ))
           ) : (
             <p className="mb-2">Looks like you have no modules! Create some!</p>
           )}
 
-          <Dialog open={isModalOpen} onOpenChange={modalOpenChangeHandler}>
+          <Dialog
+            open={isAddModuleModalOpen}
+            onOpenChange={modalOpenChangeHandler}
+          >
             <DialogTrigger asChild>
-              <Button className="ml-1 flex flex-col items-center justify-center rounded-sm bg-gray-700 text-gray-300 transition-all duration-300 ease-in-out hover:bg-white">
-                + Add new module
-              </Button>
+              <div>
+                <Button className="ml-1 flex flex-col items-center justify-center rounded-sm bg-gray-700 text-gray-300 transition-all duration-300 ease-in-out hover:bg-white">
+                  + Add new module
+                </Button>
+              </div>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>New Module</DialogTitle>
+                <DialogDescription>
+                  Fill in the details for your new module below. Click "Create"
+                  when you're done.
+                </DialogDescription>
               </DialogHeader>
               <form
                 className="mt-4 flex w-full flex-col gap-4"
                 onSubmit={submitNewModule}
               >
                 <div className="space-y-2">
-                  <Label htmlFor="title">Title</Label>
+                  <Label htmlFor="add-module-title">Title</Label>
                   <Input
                     type="text"
-                    id="title"
+                    id="add-module-title"
                     value={moduleTitle}
                     placeholder="e.g. Programming For Computer Scientists"
                     onChange={(e) => setModuleTitle(e.target.value)}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="code">Code (Optional)</Label>
+                  <Label htmlFor="add-module-code">Code (Optional)</Label>
                   <Input
                     type="text"
-                    id="code"
+                    id="add-module-code"
                     value={moduleCode}
                     placeholder="e.g. CS175"
                     onChange={(e) => setModuleCode(e.target.value)}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="cats">Credits (CATS) (INFO ICON?)</Label>
+                  <Label htmlFor="add-module-cats">
+                    Credits (CATS) (INFO ICON?)
+                  </Label>
                   <Input
                     type="number"
-                    id="cats"
+                    id="add-module-cats"
                     value={moduleCredits}
-                    min={0}
+                    min={1}
                     // Add max value?
                     onChange={(e) => setModuleCredits(e.target.value)}
                     onKeyDown={(evt) =>
@@ -245,7 +408,7 @@ export default function YearDetails() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="targetMark">
+                  <Label htmlFor="add-module-targetMark">
                     Target Module Mark % (Optional)
                   </Label>
                   <Input
@@ -253,7 +416,7 @@ export default function YearDetails() {
                     value={moduleTargetMark}
                     min={0}
                     max={100}
-                    id="targetMark"
+                    id="add-module-targetMark"
                     onChange={(e) => setModuleTargetMark(e.target.value)}
                     onKeyDown={(evt) =>
                       ['e', 'E', '+', '-'].includes(evt.key) &&
@@ -261,13 +424,55 @@ export default function YearDetails() {
                     }
                   />
                 </div>
-                <Button type="submit">Create</Button>
+                <Button type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? 'Creating...' : 'Create'}
+                </Button>
               </form>
               {formError && (
                 <p className="text-center text-red-400">{formError}</p>
               )}
             </DialogContent>
           </Dialog>
+
+          <ModuleEditingDialog
+            isOpen={isEditingModuleModalOpen}
+            onClose={() => setIsEditingModuleModalOpen(false)}
+            onUpdate={updateModule}
+            moduleData={editingModule}
+          />
+
+          <AssignmentEditingDialog
+            isOpen={isEditingAssignmentModalOpen}
+            onClose={() => setIsEditingAssignmentModalOpen(false)}
+            onUpdate={updateAssignment}
+            assignmentData={editingAssignment}
+            moduleData={moduleOfEditingAssignment}
+          />
+
+          <AlertDialog
+            open={!!assignmentToDelete}
+            onOpenChange={() => setAssignmentToDelete(null)}
+          >
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This assignment will be
+                  permanently removed from the current module.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={handleDeleteAssignment}
+                  className="hover:bg-red-600"
+                  disabled={isDeleteAssignmentSubmitting}
+                >
+                  {isDeleteAssignmentSubmitting ? 'Deleting...' : 'Delete'}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </main>
       </div>
     </>
