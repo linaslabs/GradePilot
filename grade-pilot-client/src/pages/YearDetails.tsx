@@ -27,6 +27,14 @@ import {
 import ModuleEditingDialog from '@/components/ui/module-editing-dialog';
 import AssignmentEditingDialog from '@/components/ui/assignment-editing-dialog';
 import type { AcademicYearData, AssignmentType, Module } from '@/types';
+import {
+  ClipboardList,
+  GraduationCap,
+  Library,
+  Square,
+  SquareStack,
+} from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 interface formData {
   name: string;
   credits: number;
@@ -72,6 +80,7 @@ export default function YearDetails() {
   useEffect(() => {
     async function fetchYear() {
       try {
+        setIsLoading(true);
         const response = await fetch(`${apiUrl}/year/${id}`, {
           headers: {
             authorization: `Bearer ${token}`,
@@ -306,175 +315,196 @@ export default function YearDetails() {
     }
   };
 
-  if (!yearInfo) {
+  if (!yearInfo && !isLoading) {
     return <div>Could not find data for year {id}</div>;
   }
 
   return (
     <>
-      <div className="flex flex-col gap-3 pl-7">
-        <section className="flex flex-col gap-3">
-          <h1>Year 1</h1>
-          <h2>Modules</h2>
-        </section>
-        {error}
-        <main className="flex w-[70vw] flex-col items-start pr-7">
-          {yearInfo && yearInfo.modules.length > 0 ? (
-            yearInfo.modules.map((module) => (
-              <ModuleAccordion
-                key={module.id}
-                module={module}
-                assignmentAddFunction={addAssignment}
-                moduleDeleteFunction={deleteModule}
-                editModuleFunction={() => {
-                  setIsEditingModuleModalOpen(true);
-                  setEditingModule(module);
-                }}
-                editAssignmentFunction={(
-                  currentAssignment: AssignmentType,
-                  currentModule: Module,
-                ) => {
-                  setIsEditingAssignmentModalOpen(true);
-                  setEditingAssignment(currentAssignment);
-                  setModuleOfEditingAssignment(currentModule);
-                }}
-                deleteAssignmentFunction={(assignment: AssignmentType) =>
-                  setAssignmentToDelete(assignment)
-                }
-              />
-            ))
-          ) : (
-            <p className="mb-2">Looks like you have no modules! Create some!</p>
-          )}
+      {isLoading ? (
+        <>
+          <div className='flex flex-col gap-2 mb-3 pl-7'>
+            <Skeleton className="h-13 w-35 mb-1" />
+            <Skeleton className="h-8 w-42" />
+          </div>
 
-          <Dialog
-            open={isAddModuleModalOpen}
-            onOpenChange={modalOpenChangeHandler}
-          >
-            <DialogTrigger asChild>
-              <div>
-                <Button className="ml-1 flex flex-col items-center justify-center rounded-sm bg-gray-700 text-gray-300 transition-all duration-300 ease-in-out hover:bg-white">
-                  + Add new module
-                </Button>
-              </div>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>New Module</DialogTitle>
-                <DialogDescription>
-                  Fill in the details for your new module below. Click "Create"
-                  when you're done.
-                </DialogDescription>
-              </DialogHeader>
-              <form
-                className="mt-4 flex w-full flex-col gap-4"
-                onSubmit={submitNewModule}
-              >
-                <div className="space-y-2">
-                  <Label htmlFor="add-module-title">Title</Label>
-                  <Input
-                    type="text"
-                    id="add-module-title"
-                    value={moduleTitle}
-                    placeholder="e.g. Programming For Computer Scientists"
-                    onChange={(e) => setModuleTitle(e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="add-module-code">Code (Optional)</Label>
-                  <Input
-                    type="text"
-                    id="add-module-code"
-                    value={moduleCode}
-                    placeholder="e.g. CS175"
-                    onChange={(e) => setModuleCode(e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="add-module-cats">
-                    Credits (CATS) (INFO ICON?)
-                  </Label>
-                  <Input
-                    type="number"
-                    id="add-module-cats"
-                    value={moduleCredits}
-                    min={1}
-                    // Add max value?
-                    onChange={(e) => setModuleCredits(e.target.value)}
-                    onKeyDown={(evt) =>
-                      ['e', 'E', '+', '-'].includes(evt.key) &&
-                      evt.preventDefault()
-                    }
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="add-module-targetMark">
-                    Target Module Mark % (Optional)
-                  </Label>
-                  <Input
-                    type="number"
-                    value={moduleTargetMark}
-                    min={0}
-                    max={100}
-                    id="add-module-targetMark"
-                    onChange={(e) => setModuleTargetMark(e.target.value)}
-                    onKeyDown={(evt) =>
-                      ['e', 'E', '+', '-'].includes(evt.key) &&
-                      evt.preventDefault()
-                    }
-                  />
-                </div>
-                <Button type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? 'Creating...' : 'Create'}
-                </Button>
-              </form>
-              {formError && (
-                <p className="text-center text-red-400">{formError}</p>
-              )}
-            </DialogContent>
-          </Dialog>
+          <div className="flex w-[70vw] flex-col gap-3 pl-7">
+            <Skeleton className="h-17" />
+            <Skeleton className="h-17" />
+            <Skeleton className="h-17" />
+            <Skeleton className="h-17" />
+          </div>
+        </>
+      ) : (
+        <div className="flex flex-col gap-3 pl-7">
+          <section className="flex flex-col gap-3">
+            <h1>Year {yearInfo?.yearNumber}</h1>
+            <h2 className="flex items-center">
+              <SquareStack className="mr-2 h-8 w-8" />
+              Modules
+            </h2>
+          </section>
+          {error}
+          <main className="flex w-[70vw] flex-col items-start pr-7">
+            {yearInfo && yearInfo.modules.length > 0 ? (
+              yearInfo.modules.map((module) => (
+                <ModuleAccordion
+                  key={module.id}
+                  module={module}
+                  assignmentAddFunction={addAssignment}
+                  moduleDeleteFunction={deleteModule}
+                  editModuleFunction={() => {
+                    setIsEditingModuleModalOpen(true);
+                    setEditingModule(module);
+                  }}
+                  editAssignmentFunction={(
+                    currentAssignment: AssignmentType,
+                    currentModule: Module,
+                  ) => {
+                    setIsEditingAssignmentModalOpen(true);
+                    setEditingAssignment(currentAssignment);
+                    setModuleOfEditingAssignment(currentModule);
+                  }}
+                  deleteAssignmentFunction={(assignment: AssignmentType) =>
+                    setAssignmentToDelete(assignment)
+                  }
+                />
+              ))
+            ) : (
+              <p className="mb-2">
+                Looks like you have no modules! Create some!
+              </p>
+            )}
 
-          <ModuleEditingDialog
-            isOpen={isEditingModuleModalOpen}
-            onClose={() => setIsEditingModuleModalOpen(false)}
-            onUpdate={updateModule}
-            moduleData={editingModule}
-          />
-
-          <AssignmentEditingDialog
-            isOpen={isEditingAssignmentModalOpen}
-            onClose={() => setIsEditingAssignmentModalOpen(false)}
-            onUpdate={updateAssignment}
-            assignmentData={editingAssignment}
-            moduleData={moduleOfEditingAssignment}
-          />
-
-          <AlertDialog
-            open={!!assignmentToDelete}
-            onOpenChange={() => setAssignmentToDelete(null)}
-          >
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  This action cannot be undone. This assignment will be
-                  permanently removed from the current module.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction
-                  onClick={handleDeleteAssignment}
-                  className="hover:bg-red-600"
-                  disabled={isDeleteAssignmentSubmitting}
+            <Dialog
+              open={isAddModuleModalOpen}
+              onOpenChange={modalOpenChangeHandler}
+            >
+              <DialogTrigger asChild>
+                <div>
+                  <Button className="ml-1 flex flex-col items-center justify-center rounded-sm bg-gray-700 text-gray-300 transition-all duration-300 ease-in-out hover:bg-white">
+                    + Add new module
+                  </Button>
+                </div>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>New Module</DialogTitle>
+                  <DialogDescription>
+                    Fill in the details for your new module below. Click
+                    "Create" when you're done.
+                  </DialogDescription>
+                </DialogHeader>
+                <form
+                  className="mt-4 flex w-full flex-col gap-4"
+                  onSubmit={submitNewModule}
                 >
-                  {isDeleteAssignmentSubmitting ? 'Deleting...' : 'Delete'}
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        </main>
-      </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="add-module-title">Title</Label>
+                    <Input
+                      type="text"
+                      id="add-module-title"
+                      value={moduleTitle}
+                      placeholder="e.g. Programming For Computer Scientists"
+                      onChange={(e) => setModuleTitle(e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="add-module-code">Code (Optional)</Label>
+                    <Input
+                      type="text"
+                      id="add-module-code"
+                      value={moduleCode}
+                      placeholder="e.g. CS175"
+                      onChange={(e) => setModuleCode(e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="add-module-cats">
+                      Credits (CATS) (INFO ICON?)
+                    </Label>
+                    <Input
+                      type="number"
+                      id="add-module-cats"
+                      value={moduleCredits}
+                      min={1}
+                      // Add max value?
+                      onChange={(e) => setModuleCredits(e.target.value)}
+                      onKeyDown={(evt) =>
+                        ['e', 'E', '+', '-'].includes(evt.key) &&
+                        evt.preventDefault()
+                      }
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="add-module-targetMark">
+                      Target Module Mark % (Optional)
+                    </Label>
+                    <Input
+                      type="number"
+                      value={moduleTargetMark}
+                      min={0}
+                      max={100}
+                      id="add-module-targetMark"
+                      onChange={(e) => setModuleTargetMark(e.target.value)}
+                      onKeyDown={(evt) =>
+                        ['e', 'E', '+', '-'].includes(evt.key) &&
+                        evt.preventDefault()
+                      }
+                    />
+                  </div>
+                  <Button type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? 'Creating...' : 'Create'}
+                  </Button>
+                </form>
+                {formError && (
+                  <p className="text-center text-red-400">{formError}</p>
+                )}
+              </DialogContent>
+            </Dialog>
+
+            <ModuleEditingDialog
+              isOpen={isEditingModuleModalOpen}
+              onClose={() => setIsEditingModuleModalOpen(false)}
+              onUpdate={updateModule}
+              moduleData={editingModule}
+            />
+
+            <AssignmentEditingDialog
+              isOpen={isEditingAssignmentModalOpen}
+              onClose={() => setIsEditingAssignmentModalOpen(false)}
+              onUpdate={updateAssignment}
+              assignmentData={editingAssignment}
+              moduleData={moduleOfEditingAssignment}
+            />
+
+            <AlertDialog
+              open={!!assignmentToDelete}
+              onOpenChange={() => setAssignmentToDelete(null)}
+            >
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This assignment will be
+                    permanently removed from the current module.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={handleDeleteAssignment}
+                    className="hover:bg-red-600"
+                    disabled={isDeleteAssignmentSubmitting}
+                  >
+                    {isDeleteAssignmentSubmitting ? 'Deleting...' : 'Delete'}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </main>
+        </div>
+      )}
     </>
   );
 }

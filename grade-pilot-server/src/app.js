@@ -12,6 +12,13 @@ const PORT = 3000;
 
 app.set("trust proxy", 1);
 
+const corsOptions = {
+  origin: process.env.FRONTEND_URL,
+  optionsSuccessStatus: 200, // for legacy browsers
+};
+
+app.use(cors(corsOptions));
+
 app.use(
   rateLimiter({
     windowMs: 15 * 60 * 1000,
@@ -19,12 +26,6 @@ app.use(
   })
 );
 
-const corsOptions = {
-  origin: process.env.FRONTEND_URL,
-  optionsSuccessStatus: 200, // for legacy browsers
-};
-
-app.use(cors(corsOptions));
 app.use(helmet());
 app.use(express.json());
 
