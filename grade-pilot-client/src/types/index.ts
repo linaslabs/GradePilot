@@ -19,6 +19,17 @@ export interface AssignmentType {
   weightingPercent: number;
 }
 
+export interface Degree {
+  id: string;
+  title: string;
+  studyLevel: string;
+  degreeType: string;
+  totalLengthYears: number;
+  currentYear: number;
+  targetDegreeClassification?: string;
+  academicYears: AcademicYearData[];
+}
+
 export interface AcademicYearData {
   id: string;
   yearNumber: number;
@@ -26,4 +37,3 @@ export interface AcademicYearData {
   targetClassification?: string;
   modules: Module[];
 }
-

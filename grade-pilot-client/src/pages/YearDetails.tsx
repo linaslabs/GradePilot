@@ -59,7 +59,7 @@ export default function YearDetails() {
     useState<AssignmentType | null>(null);
   const [assignmentToDelete, setAssignmentToDelete] =
     useState<AssignmentType | null>(null);
-  const [assignmentDeleteError, setAssignmentDeleteError] = useState('');
+  const [assignmentDeleteError, setAssignmentDeleteError] = useState(''); // Needed? When to clear the error beneath the assignment?
   const [isDeleteAssignmentSubmitting, setIsDeleteAssignmentSubmitting] =
     useState(false);
 
