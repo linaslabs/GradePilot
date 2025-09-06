@@ -58,10 +58,12 @@ export default function AppSidebar({ degree }: SidebarProps) {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton>
-                  <Settings />
-                  Settings
-                </SidebarMenuButton>
+                <NavLink to="/dashboard/settings">
+                  <SidebarMenuButton>
+                    <Settings />
+                    Settings
+                  </SidebarMenuButton>
+                </NavLink>
                 <SidebarMenuButton onClick={handleLogout}>
                   <LogOut />
                   Logout

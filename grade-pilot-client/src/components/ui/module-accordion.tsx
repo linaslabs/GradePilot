@@ -194,7 +194,7 @@ export default function ModuleAccordion({
               {module.moduleCode} {module.name}
             </h3>
             <div className="flex flex-col items-center rounded-sm bg-gray-600 p-2 text-white">
-              <p>{gradeFormatter(currentMarkRelative)}%</p>
+              <p>Currently working at: {gradeFormatter(currentMarkRelative)}%</p>
             </div>
           </AccordionTrigger>
           <AccordionContent className="pl-5">

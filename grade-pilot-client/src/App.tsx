@@ -11,6 +11,7 @@ import Onboarding from './pages/Onboarding';
 import DashboardLayout from './pages/DashboardLayout';
 import Overview from './pages/Overview';
 import YearDetails from './pages/YearDetails';
+import Settings from './pages/Settings';
 import { AuthProvider } from './contexts/AuthContext';
 import { Analytics } from '@vercel/analytics/react';
 
@@ -37,6 +38,7 @@ function App() {
               element={<Navigate to="/dashboard/overview" replace />}
             />
             <Route path="year/:id" element={<YearDetails />} />
+            <Route path="settings" element={<Settings />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
