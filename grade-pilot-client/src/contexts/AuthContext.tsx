@@ -3,6 +3,7 @@ import { createContext, useState, type ReactNode } from 'react';
 interface User {
   // Added user, although simple, in case I want to access anymore user info
   name: string;
+  onboardingCompleted: boolean;
 }
 
 // Define the context object that other components can access (includes everything)

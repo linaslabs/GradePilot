@@ -42,26 +42,35 @@ export const createDegree = async (req, res) => {
     targetClassification,
   } = req.body;
 
-  const newDegree = await prisma.degree.create({
-    data: {
-      title: title,
-      studyLevel: studyLevel,
-      degreeType: degreeType,
-      totalLengthYears: yearData.length,
-      currentYear: currentYear,
-      targetClassification: targetClassification,
+  const [newDegree, updatedUser] = await prisma.$transaction([
+    prisma.degree.create({
+      data: {
+        title: title,
+        studyLevel: studyLevel,
+        degreeType: degreeType,
+        totalLengthYears: yearData.length,
+        currentYear: currentYear,
+        targetClassification: targetClassification,
 
-      user: {
-        connect: {
-          id: req.user.userId,
+        user: {
+          connect: {
+            id: req.user.userId,
+          },
+        },
+
+        academicYears: {
+          create: yearData, // Need to add year weightings when compiling the yearData
         },
       },
+    }),
 
-      academicYears: {
-        create: yearData, // Need to add year weightings when compiling the yearData
+    prisma.user.update({
+      where: { id: req.user.userId },
+      data: {
+        onboardingCompleted: true,
       },
-    },
-  });
+    }),
+  ]);
 
   res.status(201).json({ degree: newDegree });
 };

@@ -14,6 +14,7 @@ import YearDetails from './pages/YearDetails';
 import Settings from './pages/Settings';
 import { AuthProvider } from './contexts/AuthContext';
 import { Analytics } from '@vercel/analytics/react';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -24,7 +25,10 @@ function App() {
           {/* "Replace" prevents going back to blank page */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/onboarding" element={<Onboarding />} />
+          <Route
+            path="/onboarding"
+            element={<ProtectedRoute children={<Onboarding />} />}
+          />
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route
               path=""

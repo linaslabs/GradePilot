@@ -35,7 +35,10 @@ export const login = async (req, res) => {
     expiresIn: process.env.JWT_LIFETIME,
   });
 
-  res.status(200).json({ user: { name: user.name }, token: jwtToken });
+  res.status(200).json({
+    user: { name: user.name, onboardingCompleted: user.onboardingCompleted },
+    token: jwtToken,
+  });
 };
 
 export const registration = async (req, res) => {
@@ -73,5 +76,13 @@ export const registration = async (req, res) => {
     expiresIn: process.env.JWT_LIFETIME,
   });
 
-  res.status(201).json({ user: { name: newUser.name }, token: jwtToken });
+  res
+    .status(201)
+    .json({
+      user: {
+        name: newUser.name,
+        onboardingCompleted: newUser.onboardingCompleted,
+      },
+      token: jwtToken,
+    });
 };
