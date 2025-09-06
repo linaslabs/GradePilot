@@ -179,6 +179,7 @@ export default function ModuleAccordion({
       setAssignmentTitle('');
       setAssignmentWeight('');
       setAssignmentMark('');
+      setIsComplete(false);
       setFormError('');
       setInvalidWeightError('');
     }
@@ -188,12 +189,11 @@ export default function ModuleAccordion({
     <section className="flex w-full gap-2">
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value={`item-${module.id}`}>
-          <AccordionTrigger className="bg-sidebar-primary-foreground text-background mb-2 ml-1 flex items-center justify-between pr-5 pl-5 transition-all duration-200 ease-in-out hover:no-underline">
+          <AccordionTrigger className="bg-sidebar-primary-foreground text-background mb-2 ml-1 flex items-center pr-5 pl-5 transition-all duration-200 ease-in-out hover:no-underline">
             <h3 className="flex-1 text-left">
               {module.moduleCode} {module.name}
             </h3>
-            <div className="rounded-sm border-gray-300 border-1 p-2 flex gap-1">
-              <p>Relative Mark:</p>
+            <div className="flex flex-col items-center rounded-sm bg-gray-600 p-2 text-white">
               <p>{gradeFormatter(currentMarkRelative)}%</p>
             </div>
           </AccordionTrigger>
