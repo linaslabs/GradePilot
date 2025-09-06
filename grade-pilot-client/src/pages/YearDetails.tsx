@@ -27,13 +27,7 @@ import {
 import ModuleEditingDialog from '@/components/ui/module-editing-dialog';
 import AssignmentEditingDialog from '@/components/ui/assignment-editing-dialog';
 import type { AcademicYearData, AssignmentType, Module } from '@/types';
-import {
-  ClipboardList,
-  GraduationCap,
-  Library,
-  Square,
-  SquareStack,
-} from 'lucide-react';
+import { SquareStack } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 interface formData {
   name: string;
@@ -99,9 +93,9 @@ export default function YearDetails() {
         setYearInfo(data.academicYear);
       } catch (error) {
         if (error instanceof Error) {
-          setFormError(error.message);
+          setError(error.message);
         } else {
-          setFormError('An unexpected error occurred... Try again later');
+          setError('An unexpected error occurred... Try again later');
         }
       } finally {
         setIsLoading(false);
@@ -316,15 +310,27 @@ export default function YearDetails() {
   };
 
   if (!yearInfo && !isLoading) {
-    return <div>Could not find data for year {id}</div>;
+    return (
+      <div className="ml-7 flex flex-col">
+        Could not find your data for year {id}
+        <div className='flex gap-1'>
+          Details:
+          {error ? (
+            <p className="text-red-500">{error}</p>
+          ) : (
+            'Please try again later'
+          )}
+        </div>
+      </div>
+    );
   }
 
   return (
     <>
       {isLoading ? (
         <>
-          <div className='flex flex-col gap-2 mb-3 pl-7'>
-            <Skeleton className="h-13 w-35 mb-1" />
+          <div className="mb-3 flex flex-col gap-2 pl-7">
+            <Skeleton className="mb-1 h-13 w-35" />
             <Skeleton className="h-8 w-42" />
           </div>
 
@@ -344,7 +350,6 @@ export default function YearDetails() {
               Modules
             </h2>
           </section>
-          {error}
           <main className="flex w-[70vw] flex-col items-start pr-7">
             {yearInfo && yearInfo.modules.length > 0 ? (
               yearInfo.modules.map((module) => (

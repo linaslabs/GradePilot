@@ -4,11 +4,10 @@ import AppSidebar from '@/components/ui/app-sidebar';
 import { Outlet, useOutletContext } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import type { Degree } from '@/types';
+import { Loader2 } from 'lucide-react';
 
 interface OutletContextType {
   degree: Degree | null;
-  isLoading: boolean;
-  error: string | null;
 }
 
 export default function DashboardLayout() {
@@ -18,12 +17,11 @@ export default function DashboardLayout() {
   const [degree, setDegree] = useState<Degree | null>(null);
 
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchDegree = async () => {
       try {
-        setIsLoading(true);
         const response = await fetch(`${apiUrl}/degree/my-degree`, {
           method: 'GET',
           headers: {
@@ -56,13 +54,33 @@ export default function DashboardLayout() {
       fetchDegree();
     }
   }, [token, apiUrl]);
+
+  if (isLoading) {
+    return (
+      <div className="bg-background flex min-h-screen items-center justify-center">
+        <Loader2 className="text-primary h-16 w-16 animate-spin" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex min-h-screen items-center justify-center p-8">
+        <div className="flex flex-col items-center gap-4 rounded-md p-8 text-red-600">
+          <h2 className="text-2xl font-bold">Dashboard Error</h2>
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <SidebarProvider>
         <AppSidebar degree={degree} />
         <main>
           <SidebarTrigger />
-          <Outlet context={{ degree, isLoading, error }} />
+          <Outlet context={{ degree }} />
         </main>
       </SidebarProvider>
     </>
