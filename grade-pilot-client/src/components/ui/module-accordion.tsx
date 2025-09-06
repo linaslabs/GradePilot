@@ -192,8 +192,9 @@ export default function ModuleAccordion({
             <h3 className="flex-1 text-left">
               {module.moduleCode} {module.name}
             </h3>
-            <div className="text-[] rounded-sm bg-amber-300 p-2">
-              {gradeFormatter(currentMarkRelative)}%
+            <div className="rounded-sm border-gray-300 border-1 p-2 flex gap-1">
+              <p>Relative Mark:</p>
+              <p>{gradeFormatter(currentMarkRelative)}%</p>
             </div>
           </AccordionTrigger>
           <AccordionContent className="pl-5">
