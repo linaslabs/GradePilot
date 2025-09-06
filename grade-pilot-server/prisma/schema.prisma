@@ -82,6 +82,9 @@ model Module {
   targetMark Int? // e.g. 40 (pass) for the module
   credits    Int
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   // Establishes a many-to-one relationship with an AcademicYear
   academicYear   AcademicYear @relation(fields: [academicYearId], references: [id])
   academicYearId String
