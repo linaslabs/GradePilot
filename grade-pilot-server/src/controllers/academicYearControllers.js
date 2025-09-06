@@ -15,6 +15,10 @@ export const getAcademicYear = async (req, res) => {
     },
     include: {
       modules: {
+        orderBy: {
+          // Making sure that order of the modules created dont change
+          createdAt: "asc",
+        },
         include: {
           assignments: true,
         },
