@@ -12,7 +12,7 @@ I didn't have time back then, but now that I do, I've created an app that solves
 **🖊️ CRUD Functionality:** Users can create, edit, and delete their modules and the individual assignments within them, providing complete control over the year. <br/>
 **✈️ The "Pilot" Engine:** The core feature of the application. The Pilot is a smart calculator and predictor that provides real-time, actionable insights for the user's progress. Exactly what you may need for your own academic peace-of-mind!
 
-[![Live Demo:](https://img.shields.io/badge/Live_Demo-Vercel-black?style=for-the-badge&logo=vercel)](https://grade-pilot-gold.vercel.app/) \
+[![Live Demo:](https://img.shields.io/badge/Live_Demo-Vercel-black?logo=vercel)](https://grade-pilot-gold.vercel.app/) \
 [![Status:](https://img.shields.io/badge/Status-In_Progress-yellow?style=for-the-badge)]()
 
 
