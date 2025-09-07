@@ -235,8 +235,8 @@ export default function ModuleAccordion({
                 <DialogHeader>
                   <DialogTitle>New Assignment</DialogTitle>
                   <DialogDescription>
-                    Fill in the details for your new assignment below. Click
-                    "Create" when you're done.
+                    Fill in the details for your new assignment below. <br />{' '}
+                    Click "Create" when you're done.
                   </DialogDescription>
                 </DialogHeader>
                 <form
@@ -244,11 +244,7 @@ export default function ModuleAccordion({
                   onSubmit={submitNewAssignment}
                 >
                   <div className="space-y-2">
-                    <Label
-                      htmlFor="add-assignment-title"
-                    >
-                      Title
-                    </Label>
+                    <Label htmlFor="add-assignment-title">Title</Label>
                     <Input
                       type="text"
                       id="add-assignment-title"

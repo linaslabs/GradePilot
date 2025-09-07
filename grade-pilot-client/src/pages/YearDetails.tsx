@@ -398,7 +398,7 @@ export default function YearDetails() {
                 <DialogHeader>
                   <DialogTitle>New Module</DialogTitle>
                   <DialogDescription>
-                    Fill in the details for your new module below. Click
+                    Fill in the details for your new module below. <br /> Click
                     "Create" when you're done.
                   </DialogDescription>
                 </DialogHeader>

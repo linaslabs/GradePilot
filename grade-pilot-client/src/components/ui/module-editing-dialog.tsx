@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
+import DialogToolTip from './dialogToolTip';
 import {
   Dialog,
   DialogContent,
@@ -139,7 +140,10 @@ export default function ModuleEditingDialog({
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="edit-module-code">Code (Optional)</Label>
+            <Label htmlFor="edit-module-code" className="flex gap-1">
+              Code{' '}
+              <span className="text-muted-foreground text-xs">(Optional)</span>
+            </Label>
             <Input
               type="text"
               id="edit-module-code"
@@ -149,8 +153,9 @@ export default function ModuleEditingDialog({
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="edit-module-cats">
-              Credits (CATS) (INFO ICON?)
+            <Label htmlFor="edit-module-cats" className="flex gap-1">
+              Credits
+              <DialogToolTip content="CATS - A standard part of the UK credit system. Ratio of this number to the total year CATS is the weighting of the module on the year" />
             </Label>
             <Input
               type="number"
@@ -165,8 +170,10 @@ export default function ModuleEditingDialog({
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="edit-module-targetMark">
-              Target Module Mark % (Optional)
+            <Label htmlFor="edit-module-targetMark" className="flex gap-1">
+              Target Mark
+              <DialogToolTip content="This is the mark from 0-100% you hope to achieve for this module overall" />
+              <span className="text-muted-foreground text-xs">(Optional)</span>
             </Label>
             <Input
               type="number"
