@@ -1,5 +1,5 @@
 
-# GradePilot - Academic Progress Tracker🎓
+# 🎓 GradePilot - Academic Progress Tracker
 An intelligent, full-stack web application designed to help UK university students track, manage, and predict their academic grades.
 
 ## My Problem:
@@ -30,6 +30,7 @@ A detailed "Overview" page with year-on-year progress to track years at-a-glance
 The ability for users to edit their core degree information after onboarding.
 More pilot features!
 Support for multiple degree programs per user.
+
 
 
 
