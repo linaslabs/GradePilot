@@ -3,7 +3,7 @@
 An intelligent, full-stack web application designed to help UK university students track, manage, and predict their academic grades.
 
 ## My Problem:
-During last year's exam period, I realised I was always anxious about how well I'd actually do come the final exam. I wanted to know what I needed in the exam and coursework for the targets I had in mind. \ I wanted to know it easily, track it, without calculating it myself.\
+During last year's exam period, I realised I was always anxious about how well I'd actually do come the final exam. I wanted to know what I needed in the exam and coursework for the targets I had in mind. <br/> I wanted to know it easily, track it, without calculating it myself.<br/>
 I didn't have time back then, but now that I do, I've created an app that solves everything I need. Currently needs the finishing touches, but if you find it useful, I don't mind you using it either! (Don't make me pay for a database)
 
 ## Key Features:
@@ -12,8 +12,8 @@ I didn't have time back then, but now that I do, I've created an app that solves
 **CRUD Functionality:** Users can create, edit, and delete their modules and the individual assignments within them, providing complete control over the year.
 **The "Pilot" Engine:** The core feature of the application. The Pilot is a smart calculator and predictor that provides real-time, actionable insights for the user's progress. Exactly what you may need for your own academic peace-of-mind!
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Vercel-black?style=for-the-badge&logo=vercel)](https://grade-pilot-gold.vercel.app/) \
-[![Status](https://img.shields.io/badge/Status-In_Progress-yellow?style=for-the-badge)]()
+[![Live Demo:](https://img.shields.io/badge/Live_Demo-Vercel-black?style=for-the-badge&logo=vercel)](https://grade-pilot-gold.vercel.app/) \
+[![Status:](https://img.shields.io/badge/Status-In_Progress-yellow?style=for-the-badge)]()
 
 
 ## Tech Stack
@@ -38,4 +38,5 @@ A detailed "Overview" page with year-on-year progress to track years at-a-glance
 The ability for users to edit their core degree information after onboarding.
 More pilot features!
 Support for multiple degree programs per user.
+
 
