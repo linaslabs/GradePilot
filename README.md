@@ -16,7 +16,7 @@ I didn't have time back then, but now that I do, I've created an app that solves
 [![Status:](https://img.shields.io/badge/Status-In_Progress-yellow?style=for-the-badge)]()
 
 
-## Tech Stack
+## Tech Stack:
 This project is a full-stack application built with the modern, type-safe PERN (PostgreSQL, Express, React, Node.js) stack.
 
 **💻 Front-End:** React, TypeScript, Vite, Tailwind CSS, shadcn/ui, React Router <br/>
@@ -30,6 +30,7 @@ A detailed "Overview" page with year-on-year progress to track years at-a-glance
 The ability for users to edit their core degree information after onboarding.
 More pilot features!
 Support for multiple degree programs per user.
+
 
 
 
