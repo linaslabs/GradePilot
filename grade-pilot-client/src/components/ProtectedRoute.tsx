@@ -8,6 +8,9 @@ export default function ProtectedRoute({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
 
+  // Not production ready, will need to amend authContext for production ready code to triple check token is actually verified
+  // However it works for now
+
   useEffect(() => {
     if (!user) {
       navigate('/login');

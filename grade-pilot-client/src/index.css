@@ -120,7 +120,7 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
@@ -134,6 +134,14 @@
   }
   h3 {
     font-size: 22px;
+  }
+}
+
+@layer utilities {
+  input:focus-visible,
+  textarea:focus-visible,
+  button:focus-visible {
+    @apply !ring-ring !ring-1 !ring-offset-1 !outline-none;
   }
 }
 

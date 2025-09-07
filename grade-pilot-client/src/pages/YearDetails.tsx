@@ -5,6 +5,8 @@ import ModuleAccordion from '@/components/ui/module-accordion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import DialogToolTip from '@/components/ui/dialogToolTip';
+
 import {
   Dialog,
   DialogContent,
@@ -313,7 +315,7 @@ export default function YearDetails() {
     return (
       <div className="ml-7 flex flex-col">
         Could not find your data for year {id}
-        <div className='flex gap-1'>
+        <div className="flex gap-1">
           Details:
           {error ? (
             <p className="text-red-500">{error}</p>
@@ -415,7 +417,12 @@ export default function YearDetails() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="add-module-code">Code (Optional)</Label>
+                    <Label htmlFor="add-module-code" className="flex gap-1">
+                      Code{' '}
+                      <span className="text-muted-foreground text-xs">
+                        (Optional)
+                      </span>
+                    </Label>
                     <Input
                       type="text"
                       id="add-module-code"
@@ -425,8 +432,9 @@ export default function YearDetails() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="add-module-cats">
-                      Credits (CATS) (INFO ICON?)
+                    <Label htmlFor="add-module-cats" className="flex gap-1">
+                      Credits
+                      <DialogToolTip content="CATS - A standard part of the UK credit system. Ratio of this number to the total year CATS is the weighting of the module on the year" />
                     </Label>
                     <Input
                       type="number"
@@ -442,8 +450,15 @@ export default function YearDetails() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="add-module-targetMark">
-                      Target Module Mark % (Optional)
+                    <Label
+                      htmlFor="add-module-targetMark"
+                      className="flex gap-1"
+                    >
+                      Target Mark
+                      <DialogToolTip content="This is the mark from 0-100% you hope to achieve for this module overall" />
+                      <span className="text-muted-foreground text-xs">
+                        (Optional)
+                      </span>
                     </Label>
                     <Input
                       type="number"
