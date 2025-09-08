@@ -10,6 +10,7 @@ import Assignment from './assignment';
 import {
   calculateModuleMark,
   calculateModuleWeights,
+  determineModuleCompleteness,
 } from '@/utils/calculations';
 import { gradeFormatter } from '@/utils/formatting';
 import {
@@ -87,6 +88,8 @@ export default function ModuleAccordion({
   const currentMarkRelative = calculateModuleMark(module.assignments);
 
   const totalCurrentModuleWeight = calculateModuleWeights(module.assignments);
+
+  const isModuleComplete = determineModuleCompleteness(module.assignments);
 
   const submitNewAssignment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -195,7 +198,9 @@ export default function ModuleAccordion({
               {module.moduleCode} {module.name}
             </h3>
             <div className="flex gap-2">
-              <div className="flex flex-col items-center rounded-sm bg-gray-600 p-2 text-white">
+              <div
+                className={`flex flex-col items-center rounded-xl ${isModuleComplete ? 'bg-green-600' : 'bg-gray-500'} p-2 text-white`}
+              >
                 <p>{gradeFormatter(currentMarkRelative)}%</p>
               </div>
             </div>

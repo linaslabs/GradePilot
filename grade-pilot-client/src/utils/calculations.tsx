@@ -32,6 +32,25 @@ export function calculateModuleMark(assignments: AssignmentType[]): number {
   return currentMark;
 }
 
+export function determineModuleCompleteness(
+  assignments: AssignmentType[],
+): boolean {
+  if (assignments.length === 0) {
+    return false;
+  }
+
+  let complete = true;
+
+  assignments.forEach((assignment) => {
+    if (!assignment.markPercent) {
+      complete = false;
+      return complete;
+    }
+  });
+
+  return complete;
+}
+
 export function calculateModuleWeights(assignments: AssignmentType[]): number {
   let totalAssignmentsWeight = 0;
   assignments.forEach((assignment) => {
