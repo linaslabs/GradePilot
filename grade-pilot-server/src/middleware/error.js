@@ -14,6 +14,10 @@ const errorHandler = (err, req, res, next) => {
     return res.status(customError.statusCode).json({ customMessage: customError.msg }); // Returns it as a "customMessage"
   }
 
+  if (customError.msg === "Failed to fetch"){
+    customError.msg = "There was a server error, try again later";
+  }
+
   // General error handler
   res.status(customError.statusCode).json({ message: customError.msg });
   console.error({ error: err });
