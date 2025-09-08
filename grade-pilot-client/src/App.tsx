@@ -16,6 +16,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { Analytics } from '@vercel/analytics/react';
 import OnboardingRoute from './components/OnboardingRoute';
 import PrivateRoute from './components/PrivateRoute';
+import PublicRoute from './components/PublicRoute';
 
 function App() {
   return (
@@ -26,9 +27,11 @@ function App() {
           <Route path="/" element={<Navigate to="/login" replace />} />{' '}
           {/* "Replace" prevents going back to blank page */}
           {/* PUBLIC ROUTES */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          {/* ONBOARDING ROUTE - To protect onboarding page*/}
+          <Route element={<PublicRoute />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Route>
+          {/* ONBOARDING ROUTE - Specialised to protect onboarding page*/}
           <Route element={<OnboardingRoute />}>
             <Route path="/onboarding" element={<Onboarding />} />
           </Route>
