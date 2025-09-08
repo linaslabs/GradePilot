@@ -12,6 +12,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [serverStartupMessage, setServerStartupMessage] = useState('');
 
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -22,6 +23,10 @@ export default function Login() {
     setIsSubmitting(true);
     const formData = { email, password };
     try {
+      setTimeout(() => {
+        setServerStartupMessage('Booting up web server...');
+      }, 3000);
+
       const response = await fetch(`${apiUrl}/auth/login`, {
         method: 'POST',
         headers: {
@@ -49,6 +54,7 @@ export default function Login() {
       }
     } finally {
       setIsSubmitting(false);
+      setServerStartupMessage('');
     }
   };
 
@@ -77,7 +83,7 @@ export default function Login() {
           />
         </div>
         <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Logging in...' : 'Login'}
+          {isSubmitting ? serverStartupMessage || 'Logging in...' : 'Login'}
         </Button>
       </form>
       {error && <p className="text-red-400">{error}</p>}
