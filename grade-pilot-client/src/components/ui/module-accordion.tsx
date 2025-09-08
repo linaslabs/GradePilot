@@ -5,6 +5,7 @@ import { Label } from './label';
 import { Input } from './input';
 import { Trash, Edit } from 'lucide-react';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import DialogToolTip from './dialogToolTip';
 import Assignment from './assignment';
 import {
   calculateModuleMark,
@@ -193,10 +194,10 @@ export default function ModuleAccordion({
             <h3 className="flex-1 text-left">
               {module.moduleCode} {module.name}
             </h3>
-            <div className="flex flex-col items-center rounded-sm bg-gray-600 p-2 text-[12px] text-white">
-              <p>
-                Currently working at: {gradeFormatter(currentMarkRelative)}%
-              </p>
+            <div className="flex gap-2">
+              <div className="flex flex-col items-center rounded-sm bg-gray-600 p-2 text-white">
+                <p>{gradeFormatter(currentMarkRelative)}%</p>
+              </div>
             </div>
           </AccordionTrigger>
           <AccordionContent className="pl-5">

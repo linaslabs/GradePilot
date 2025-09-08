@@ -3,6 +3,7 @@ import type { AssignmentType, Module } from '@/types';
 import { calculatePilotResponse } from '@/utils/calculations';
 import { gradeFormatter } from '@/utils/formatting';
 import PilotTip from './pilotTip';
+import { Progress } from '@/components/ui/progress';
 import { BowArrow } from 'lucide-react';
 
 interface ModuleInfoProp {
@@ -50,15 +51,13 @@ export default function ModuleInfo({ module, assignments }: ModuleInfoProp) {
       <div className="grid grid-cols-16 gap-2">
         <div className="col-span-2 flex flex-col items-center rounded-sm bg-gray-600 pt-2 pr-5 pb-2 pl-5 text-white">
           <span className="text-[12px]">Credits: </span>
-          <span className='text-[15px]'>{module.credits}</span>
+          <span className="text-[15px]">{module.credits}</span>
         </div>
         <div
           className={`col-span-10 flex flex-col items-center rounded-sm ${allAssignmentsComplete()} pt-2 pr-5 pb-2 pl-5 text-white`}
         >
-          <span className="text-[12px]">
-            Assignments:
-          </span>
-          <span className='text-[15px]'>
+          <span className="text-[12px]">Assignments:</span>
+          <span className="text-[15px]">
             {assignmentsCompleted}/{assignmentCount} Complete
           </span>
         </div>
@@ -85,7 +84,14 @@ export default function ModuleInfo({ module, assignments }: ModuleInfoProp) {
             <span className="text-[12px]">Pilot:</span>
             <div className="text-[17px]">
               {totalAssignmentsWeight !== 100 ? (
-                `Add all the assignments for this module to enable pilot - [ ${totalAssignmentsWeight}% ]`
+                <>
+                  Add all the assignments (up to 100% weight) for this module
+                  to enable pilot
+                  <Progress
+                    value={totalAssignmentsWeight}
+                    className="h-1 flex-1"
+                  />
+                </>
               ) : incompleteAssignments.length === 0 ? (
                 <div>
                   <p>Module Complete!</p>

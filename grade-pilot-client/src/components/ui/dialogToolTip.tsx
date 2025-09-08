@@ -9,8 +9,8 @@ import { CircleHelp } from 'lucide-react';
 export default function DialogToolTip({ content }: { content: string }) {
   return (
     <Tooltip>
-      <TooltipTrigger className='opacity-50'>
-        <CircleHelp className='h-4 w-4 bg-gray-600 rounded-md'/>
+      <TooltipTrigger>
+        <CircleHelp className="bg-muted h-4 w-4 rounded-md text-white opacity-50" />
       </TooltipTrigger>
       <TooltipContent>
         <p>{content}</p>

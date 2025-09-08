@@ -349,7 +349,10 @@ export default function YearDetails() {
             <h1>Year {yearInfo?.yearNumber}</h1>
             <h2 className="flex items-center">
               <SquareStack className="mr-2 h-8 w-8" />
-              Modules
+              Modules{' '}
+              <div className="ml-2">
+                <DialogToolTip content='Each module has a "current mark average" displayed on its right, this is the current module mark out of JUST its completed assignments' />
+              </div>
             </h2>
           </section>
           <main className="flex w-[70vw] flex-col items-start pr-7">
