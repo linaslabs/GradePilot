@@ -410,16 +410,6 @@ export default function YearDetails() {
                   onSubmit={submitNewModule}
                 >
                   <div className="space-y-2">
-                    <Label htmlFor="add-module-title">Title</Label>
-                    <Input
-                      type="text"
-                      id="add-module-title"
-                      value={moduleTitle}
-                      placeholder="e.g. Programming For Computer Scientists"
-                      onChange={(e) => setModuleTitle(e.target.value)}
-                    />
-                  </div>
-                  <div className="space-y-2">
                     <Label htmlFor="add-module-code" className="flex gap-1">
                       Code{' '}
                       <span className="text-muted-foreground text-xs">
@@ -434,6 +424,17 @@ export default function YearDetails() {
                       onChange={(e) => setModuleCode(e.target.value)}
                     />
                   </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="add-module-title">Title</Label>
+                    <Input
+                      type="text"
+                      id="add-module-title"
+                      value={moduleTitle}
+                      placeholder="e.g. Programming For Computer Scientists"
+                      onChange={(e) => setModuleTitle(e.target.value)}
+                    />
+                  </div>
+
                   <div className="space-y-2">
                     <Label htmlFor="add-module-cats" className="flex gap-1">
                       Credits

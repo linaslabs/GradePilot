@@ -130,18 +130,8 @@ export default function ModuleEditingDialog({
           onSubmit={updateModule}
         >
           <div className="space-y-2">
-            <Label htmlFor="edit-module-title">Title</Label>
-            <Input
-              type="text"
-              id="edit-module-title"
-              value={moduleTitle}
-              placeholder="e.g. Programming For Computer Scientists"
-              onChange={(e) => setModuleTitle(e.target.value)}
-            />
-          </div>
-          <div className="space-y-2">
             <Label htmlFor="edit-module-code" className="flex gap-1">
-              Code{' '}
+              Code
               <span className="text-muted-foreground text-xs">(Optional)</span>
             </Label>
             <Input
@@ -150,6 +140,16 @@ export default function ModuleEditingDialog({
               value={moduleCode}
               placeholder="e.g. CS175"
               onChange={(e) => setModuleCode(e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="edit-module-title">Title</Label>
+            <Input
+              type="text"
+              id="edit-module-title"
+              value={moduleTitle}
+              placeholder="e.g. Programming For Computer Scientists"
+              onChange={(e) => setModuleTitle(e.target.value)}
             />
           </div>
           <div className="space-y-2">
