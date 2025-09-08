@@ -20,6 +20,7 @@ function App() {
   return (
     <AuthProvider>
       <Router>
+        <Analytics />
         <Routes>
           <Route path="/" element={<Navigate to="/login" replace />} />{' '}
           {/* "Replace" prevents going back to blank page */}
