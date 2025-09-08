@@ -14,7 +14,8 @@ import YearDetails from './pages/YearDetails';
 import Settings from './pages/Settings';
 import { AuthProvider } from './contexts/AuthContext';
 import { Analytics } from '@vercel/analytics/react';
-import ProtectedRoute from './components/ProtectedRoute';
+import OnboardingRoute from './components/OnboardingRoute';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   return (
@@ -24,26 +25,30 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/login" replace />} />{' '}
           {/* "Replace" prevents going back to blank page */}
+          {/* PUBLIC ROUTES */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route
-            path="/onboarding"
-            element={<ProtectedRoute children={<Onboarding />} />}
-          />
-          <Route path="/dashboard" element={<DashboardLayout />}>
-            <Route
-              path=""
-              element={<Navigate to="/dashboard/year/1" replace />}
-            />{' '}
-            {/* For now redirect to first year dashboard, whilst overview page is WIP */}
-            {/* If nothing is added after "/dashboard" URI, then redirected to "overview"*/}
-            <Route path="overview" element={<Overview />} />
-            <Route
-              path="year"
-              element={<Navigate to="/dashboard/overview" replace />}
-            />
-            <Route path="year/:id" element={<YearDetails />} />
-            <Route path="settings" element={<Settings />} />
+          {/* ONBOARDING ROUTE - To protect onboarding page*/}
+          <Route element={<OnboardingRoute />}>
+            <Route path="/onboarding" element={<Onboarding />} />
+          </Route>
+          {/* PRIVATE ROUTES */}
+          <Route element={<PrivateRoute />}>
+            <Route path="/dashboard" element={<DashboardLayout />}>
+              <Route
+                path=""
+                element={<Navigate to="/dashboard/year/1" replace />}
+              />{' '}
+              {/* For now redirect to first year dashboard, whilst overview page is WIP */}
+              {/* If nothing is added after "/dashboard" URI, then redirected to "overview"*/}
+              <Route path="overview" element={<Overview />} />
+              <Route
+                path="year"
+                element={<Navigate to="/dashboard/overview" replace />}
+              />
+              <Route path="year/:id" element={<YearDetails />} />
+              <Route path="settings" element={<Settings />} />
+            </Route>
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
