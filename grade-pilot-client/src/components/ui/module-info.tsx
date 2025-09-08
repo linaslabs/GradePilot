@@ -89,7 +89,7 @@ export default function ModuleInfo({ module, assignments }: ModuleInfoProp) {
                   to enable pilot
                   <Progress
                     value={totalAssignmentsWeight}
-                    className="h-1 flex-1"
+                    className="h-1 flex-1 mt-1"
                   />
                 </>
               ) : incompleteAssignments.length === 0 ? (
