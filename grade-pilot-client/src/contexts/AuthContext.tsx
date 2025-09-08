@@ -4,6 +4,7 @@ interface User {
   // Added user, although simple, in case I want to access anymore user info
   name: string;
   onboardingCompleted: boolean;
+  degreeType: string;
 }
 
 // Define the context object that other components can access (includes everything)

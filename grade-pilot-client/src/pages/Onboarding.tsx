@@ -32,7 +32,7 @@ export default function Onboarding() {
     useState('');
   const [error, setError] = useState('');
 
-  const { token } = useAuth();
+  const { token, login } = useAuth();
   const navigate = useNavigate();
 
   const submitOnboarding = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -88,6 +88,10 @@ export default function Onboarding() {
           data.customMessage ||
             'An unexpected error occured... Try again later',
         );
+      }
+
+      if (token && data.user) {
+        login(data.user, token);
       }
 
       navigate('/dashboard');

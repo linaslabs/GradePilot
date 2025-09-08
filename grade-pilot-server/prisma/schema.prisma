@@ -47,7 +47,7 @@ model Degree {
   id                   String                @id @default(cuid())
   title                String // e.g. "Computer Science"
   studyLevel           StudyLevel // UNDERGRADUATE or POSTGRADUATE
-  degreeType           String // e.g. "Bachelor's Degree"
+  degreeType           String // e.g. "Bachelors"
   totalLengthYears     Int
   currentYear          Int
   targetClassification DegreeClassification? // The user's overall goal

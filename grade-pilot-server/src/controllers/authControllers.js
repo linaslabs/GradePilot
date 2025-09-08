@@ -35,8 +35,14 @@ export const login = async (req, res) => {
     expiresIn: process.env.JWT_LIFETIME,
   });
 
+  const degree = await prisma.degree.findUnique({ where: { userId: user.id } });
+
   res.status(200).json({
-    user: { name: user.name, onboardingCompleted: user.onboardingCompleted },
+    user: {
+      name: user.name,
+      onboardingCompleted: user.onboardingCompleted,
+      degreeType: degree.degreeType,
+    },
     token: jwtToken,
   });
 };
@@ -76,13 +82,11 @@ export const registration = async (req, res) => {
     expiresIn: process.env.JWT_LIFETIME,
   });
 
-  res
-    .status(201)
-    .json({
-      user: {
-        name: newUser.name,
-        onboardingCompleted: newUser.onboardingCompleted,
-      },
-      token: jwtToken,
-    });
+  res.status(201).json({
+    user: {
+      name: newUser.name,
+      onboardingCompleted: newUser.onboardingCompleted,
+    },
+    token: jwtToken,
+  });
 };

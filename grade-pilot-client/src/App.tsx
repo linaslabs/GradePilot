@@ -20,7 +20,7 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        `<Routes>
+        <Routes>
           <Route path="/" element={<Navigate to="/login" replace />} />{' '}
           {/* "Replace" prevents going back to blank page */}
           <Route path="/login" element={<Login />} />
@@ -28,7 +28,7 @@ function App() {
           <Route
             path="/onboarding"
             element={<ProtectedRoute children={<Onboarding />} />}
-          />`
+          />
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route
               path=""

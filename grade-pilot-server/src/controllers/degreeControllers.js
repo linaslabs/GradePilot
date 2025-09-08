@@ -72,7 +72,14 @@ export const createDegree = async (req, res) => {
     }),
   ]);
 
-  res.status(201).json({ degree: newDegree });
+  res.status(201).json({
+    degree: newDegree,
+    user: {
+      name: updatedUser.name,
+      onboardingCompleted: updatedUser.onboardingCompleted,
+      degreeType: degreeType,
+    },
+  });
 };
 
 export const updateDegree = async (req, res) => {

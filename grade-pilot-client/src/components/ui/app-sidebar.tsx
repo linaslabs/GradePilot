@@ -19,7 +19,7 @@ interface SidebarProps {
 }
 
 export default function AppSidebar({ degree }: SidebarProps) {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -31,7 +31,15 @@ export default function AppSidebar({ degree }: SidebarProps) {
       <SidebarContent>
         <SidebarHeader>Gradepilot</SidebarHeader>
         <SidebarGroup>
-          <SidebarGroupLabel>Abel's Masters Degree</SidebarGroupLabel>
+          <SidebarGroupLabel>
+            {user?.name?.split(' ')[0]}'s{' '}
+            {user?.degreeType === 'Doctorate' ||
+            user?.degreeType === 'Major' ? (
+              <>{user.degreeType}</>
+            ) : (
+              <>{user?.degreeType} degree</>
+            )}
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
