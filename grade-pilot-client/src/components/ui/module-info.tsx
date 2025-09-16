@@ -4,7 +4,7 @@ import { calculatePilotResponse } from '@/utils/calculations';
 import { gradeFormatter } from '@/utils/formatting';
 import PilotTip from './pilotTip';
 import { Progress } from '@/components/ui/progress';
-import { BowArrow } from 'lucide-react';
+import { Trophy } from 'lucide-react';
 
 interface ModuleInfoProp {
   module: Module;
@@ -69,7 +69,7 @@ export default function ModuleInfo({ module, assignments }: ModuleInfoProp) {
           </span> */}
           <span className="flex items-center gap-1 text-[12px]">
             {' '}
-            <BowArrow className="h-3 w-3" /> Target Mark:
+            <Trophy className="h-3 w-3" /> Target Mark:
           </span>
           <span className="text-[15px]">
             {module.targetMark != null ? <p>{module.targetMark}%</p> : 'None'}
@@ -85,11 +85,11 @@ export default function ModuleInfo({ module, assignments }: ModuleInfoProp) {
             <div className="text-[17px]">
               {totalAssignmentsWeight !== 100 ? (
                 <>
-                  Add all the assignments (up to 100% weight) for this module
-                  to enable pilot
+                  Add all the assignments (up to 100% weight) for this module to
+                  enable pilot
                   <Progress
                     value={totalAssignmentsWeight}
-                    className="h-1 flex-1 mt-1"
+                    className="mt-1 h-1 flex-1"
                   />
                 </>
               ) : incompleteAssignments.length === 0 ? (

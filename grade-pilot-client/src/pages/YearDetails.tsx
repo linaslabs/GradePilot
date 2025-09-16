@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import DialogToolTip from '@/components/ui/dialogToolTip';
-
 import {
   Dialog,
   DialogContent,
@@ -29,6 +28,7 @@ import {
 import ModuleEditingDialog from '@/components/ui/module-editing-dialog';
 import AssignmentEditingDialog from '@/components/ui/assignment-editing-dialog';
 import type { AcademicYearData, AssignmentType, Module } from '@/types';
+import YearDetailsHeader from '@/components/ui/yearDetailsHeader';
 import { SquareStack } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 interface formData {
@@ -345,15 +345,17 @@ export default function YearDetails() {
         </>
       ) : (
         <div className="flex flex-col gap-3 pl-7">
-          <section className="flex flex-col gap-3">
-            <h1>Year {yearInfo?.yearNumber}</h1>
-            <h2 className="flex items-center">
-              <SquareStack className="mr-2 h-8 w-8" />
-              Modules{' '}
-              <div className="ml-2">
-                <DialogToolTip content='Each module has a "current mark average" displayed on its right, this is the current module mark out of JUST its completed assignments' />
-              </div>
-            </h2>
+          <section className="flex">
+            <div>
+              <YearDetailsHeader yearInfo={yearInfo} />
+              <h2 className="flex items-center">
+                <SquareStack className="mr-2 h-8 w-8" />
+                Modules{' '}
+                <div className="ml-2">
+                  <DialogToolTip content='Each module has a "current mark average" displayed on its right, this is the current module mark out of JUST its completed assignments' />
+                </div>
+              </h2>
+            </div>
           </section>
           <main className="flex w-[70vw] flex-col items-start pr-7">
             {yearInfo && yearInfo.modules.length > 0 ? (
