@@ -7,11 +7,11 @@ During last year's exam period, I realised I was always anxious about how well I
 I didn't have time back then, but now that I do, I've created an app that solves everything I need. Currently needs the finishing touches, but if you find it useful, I don't mind you using it either! (Don't make me pay for a database
 
 ## Design:
-Module with no assignments
+Module with no assignments: <br/>
 <img width="1754" height="679" alt="Image" src="https://github.com/user-attachments/assets/8a8821bb-2b6e-45b5-8688-603881c99f92" />
-Module with assignments added but assignments incomplete
+Module with assignments added but assignments incomplete: <br/>
 <img width="1756" height="984" alt="Image" src="https://github.com/user-attachments/assets/8c531352-95f3-4135-8fa5-5b3f065e4e7f" />
-Module with all assignments added and complete
+Module with all assignments added and complete: <br/>
 <img width="1755" height="957" alt="Image" src="https://github.com/user-attachments/assets/0ae28ca4-f750-4cc0-838f-2d84701e66c8" />
 
 ## Key Features:
@@ -38,6 +38,7 @@ A detailed "Overview" page with year-on-year progress to track years at-a-glance
 The ability for users to edit their core degree information after onboarding.
 More pilot features!
 Support for multiple degree programs per user.
+
 
 
 
