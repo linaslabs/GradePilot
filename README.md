@@ -3,7 +3,7 @@
 An intelligent, full-stack web application designed to help UK university students track, manage, and predict their academic grades.
 
 ## My Problem:
-During last year's exam period, I was always anxious about my performance in the final exam. I wanted to know exactly what I needed in my exams and coursework to achieve my targets. <br/> <br/> To find this out myself, required my own calculations. I wanted it to be easy. <br/> <br/>
+During last year's exam period, I was always anxious about my performance in the final exam. I wanted to know exactly what I needed in my exams and coursework to achieve my targets. <br/> <br/> I had to calculate to find out the information. This wasn't ideal, I wanted it to be easy and quick to access. <br/> <br/>
 I didn't have time back then, but now I do. I've created an app that solves everything I need. Currently needs the finishing touches, but if you find it useful, I don't mind you using it either! (Don't make me pay for a database
 
 ## Design:
@@ -38,6 +38,7 @@ A detailed "Overview" page with year-on-year progress to track years at-a-glance
 The ability for users to edit their core degree information after onboarding.
 More pilot features!
 Support for multiple degree programs per user.
+
 
 
 
