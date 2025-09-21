@@ -3,12 +3,19 @@ import type { AcademicYearData, Module, AssignmentType } from '@/types';
 
 interface YearDetailsContextType {
   yearInfo: AcademicYearData | null;
-  // editAssignmentFunction: (updatedAssignment: AssignmentType) => void;
+  isLoading: boolean;
+  error: string | null;
+  addModule: () => void;
+  updateModule: (updatedModule: Module) => void;
+  deleteModule: (moduleId: string) => void;
+  addAssignment: (moduleId: string, newAssignment: AssignmentType) => void;
+  updateAssignment: (updatedAssignment: AssignmentType) => void;
+  deleteAssignment: (assignmentId: string) => void;
 }
 
-const YearDetailsContext = createContext<YearDetailsContextType | undefined>(
-  undefined,
-);
+export const YearDetailsContext = createContext<
+  YearDetailsContextType | undefined
+>(undefined);
 
 export function useYearDetails() {
   const context = useContext(YearDetailsContext);

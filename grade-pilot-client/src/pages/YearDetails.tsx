@@ -1,3 +1,4 @@
+import { YearDetailsContext } from '@/contexts/YearDetailsContext';
 import { useAuth } from '@/hooks/useAuth';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -328,7 +329,7 @@ export default function YearDetails() {
   }
 
   return (
-    <>
+    <YearDetailsContext.Provider value={''}>
       {isLoading ? (
         <>
           <div className="mb-3 flex flex-col gap-2 pl-7">
@@ -394,7 +395,7 @@ export default function YearDetails() {
             >
               <DialogTrigger asChild>
                 <div>
-                  <Button className="ml-1 flex flex-col items-center justify-center rounded-sm bg-gray-700 text-gray-300 transition-all duration-300 ease-in-out hover:bg-white">
+                  <Button className="ml-1 flex flex-col items-center justify-center rounded-sm bg-gray-700 text-gray-300 transition-all duration-300 ease-in-out hover:bg-white hover:text-gray-600">
                     + Add new module
                   </Button>
                 </div>
@@ -531,6 +532,6 @@ export default function YearDetails() {
           </main>
         </div>
       )}
-    </>
+    </YearDetailsContext.Provider>
   );
 }

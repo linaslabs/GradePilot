@@ -199,7 +199,7 @@ export default function ModuleAccordion({
             </h3>
             <div className="flex gap-2">
               <div
-                className={`flex flex-col items-center rounded-xl ${isModuleComplete ? 'bg-green-600' : 'bg-gray-500'} p-2 text-white`}
+                className={`flex flex-col items-center rounded-xl ${isModuleComplete ? 'bg-green-600' : 'bg-gray-600'} p-2 text-white`}
               >
                 <p>{gradeFormatter(currentMarkRelative)}%</p>
               </div>
@@ -233,7 +233,7 @@ export default function ModuleAccordion({
               onOpenChange={AddAssigmentModalOpenChangeHandler}
             >
               <DialogTrigger asChild>
-                <Button className="mb-2 ml-1 flex flex-col items-center justify-center rounded-sm bg-gray-700 font-light text-gray-300 transition-all duration-300 ease-in-out hover:bg-white">
+                <Button className="mb-2 ml-1 flex flex-col items-center justify-center rounded-sm bg-gray-700 font-light text-gray-300 transition-all duration-300 ease-in-out hover:bg-white hover:text-gray-600">
                   + Add new assignment
                 </Button>
               </DialogTrigger>
@@ -335,7 +335,7 @@ export default function ModuleAccordion({
             </Dialog>
             <div className="flex gap-1">
               <Button
-                className="mb-4 ml-1 flex flex-col items-center justify-center rounded-sm bg-gray-700 font-light text-gray-300 transition-all duration-300 ease-in-out hover:bg-white"
+                className="mb-4 ml-1 flex flex-col items-center justify-center rounded-sm bg-gray-700 font-light text-gray-300 transition-all duration-300 ease-in-out hover:bg-white hover:text-gray-600"
                 onClick={editModuleFunction} // This function just opens the editing modal, and passes back up the module currently being worked on
               >
                 <div className="flex items-center gap-2">
