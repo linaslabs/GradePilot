@@ -239,7 +239,7 @@ export default function YearDetails() {
       <div className="flex flex-col gap-3 pl-7">
         <section className="flex">
           <div>
-            <YearDetailsHeader yearInfo={yearInfo} />
+            <YearDetailsHeader />
             <h2 className="flex items-center">
               <SquareStack className="mr-2 h-8 w-8" />
               Modules{' '}

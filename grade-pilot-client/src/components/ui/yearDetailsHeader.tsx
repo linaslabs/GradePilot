@@ -1,5 +1,5 @@
 import React from 'react';
-import type { AcademicYearData } from '@/types';
+import { useYearDetails } from '@/contexts/YearDetailsContext';
 import {
   TrendingUp,
   Trophy,
@@ -12,16 +12,13 @@ import {
 import { GraduationCap } from 'lucide-react';
 import DialogToolTip from './dialogToolTip';
 
-export default function YearDetailsHeader({
-  yearInfo,
-}: {
-  yearInfo: AcademicYearData | null;
-}) {
+export default function YearDetailsHeader() {
+  const { yearInfo } = useYearDetails();
   return (
     <div className="mb-4">
       <h1 className="font-bold">Year {yearInfo?.yearNumber}</h1>
 
-      <h3 className="flex items-center gap-1">
+      {/* <h3 className="flex items-center gap-1">
         <Info className="h-5 w-5 rounded-sm" />
         Year info
       </h3>
@@ -38,7 +35,9 @@ export default function YearDetailsHeader({
             <Weight className="mr-1 h-4 w-4" />
             Weighting:
           </span>
-          <span className="font-bold">10%</span>
+          <span className="font-bold">
+            {yearInfo ? `${yearInfo.weightingPercent}%` : 'None'}
+          </span>
         </div>
         <div className="flex items-center justify-center gap-1 rounded-sm bg-gray-700 pt-1 pr-3 pb-1 pl-3 transition-all duration-200 hover:bg-white hover:text-gray-600">
           <span className="flex items-center">
@@ -83,7 +82,7 @@ export default function YearDetailsHeader({
             10%
           </span>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
