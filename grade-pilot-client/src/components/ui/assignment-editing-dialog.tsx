@@ -198,7 +198,7 @@ export default function AssignmentEditingDialog({
               type="number"
               id="edit-assignment-weight"
               value={assignmentWeight}
-              min={0}
+              min={1}
               max={100}
               onChange={(e) => setAssignmentWeight(e.target.value)}
               onKeyDown={(evt) =>
