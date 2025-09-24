@@ -3,8 +3,16 @@
 An intelligent, full-stack web application designed to help UK university students track, manage, and predict their academic grades.
 
 ## My Problem:
-During last year's exam period, I realised I was always anxious about how well I'd actually do come the final exam. I wanted to know what I needed in the exam and coursework for the targets I had in mind. <br/> <br/> I wanted to know it easily, track it, without calculating it myself.<br/> <br/>
-I didn't have time back then, but now that I do, I've created an app that solves everything I need. Currently needs the finishing touches, but if you find it useful, I don't mind you using it either! (Don't make me pay for a database)
+During last year's exam period, I was always anxious about my performance in the final exam. I wanted to know exactly what I needed in my exams and coursework to achieve my targets. <br/> <br/> I had to calculate to find out the information. This wasn't ideal, I wanted it to be easy and quick to access. <br/> <br/>
+I didn't have time back then, but now I do. I've created an app that solves everything I need. Currently needs the finishing touches, but if you find it useful, I don't mind you using it either! (Don't make me pay for a database
+
+## Design:
+Module with no assignments: <br/>
+<img width="1754" height="679" alt="Image" src="https://github.com/user-attachments/assets/8a8821bb-2b6e-45b5-8688-603881c99f92" />
+Module with assignments added but assignments incomplete: <br/>
+<img width="1756" height="984" alt="Image" src="https://github.com/user-attachments/assets/8c531352-95f3-4135-8fa5-5b3f065e4e7f" />
+Module with all assignments added and complete: <br/>
+<img width="1755" height="957" alt="Image" src="https://github.com/user-attachments/assets/0ae28ca4-f750-4cc0-838f-2d84701e66c8" />
 
 ## Key Features:
 **🛡️ Secure Authentication:** Full user registration and login system using JWT for secure, stateless authentication. <br/>
@@ -30,6 +38,11 @@ A detailed "Overview" page with year-on-year progress to track years at-a-glance
 The ability for users to edit their core degree information after onboarding.
 More pilot features!
 Support for multiple degree programs per user.
+
+
+
+
+
 
 
 
