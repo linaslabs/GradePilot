@@ -69,6 +69,11 @@ export default function AssignmentAddingDialog({
 
     e.preventDefault();
 
+    // Resetting error states so if the error no longer occurs, and another error is found, then this is clear
+    setFormError('');
+    setInvalidWeightError('');
+    setCompleteMarkError('');
+
     setIsSubmitting(true);
     if (!assignmentTitle || !assignmentWeight) {
       // Could instead throw error and handle in error handler? need to check if modal is open and type "error"

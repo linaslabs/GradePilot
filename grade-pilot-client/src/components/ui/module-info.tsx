@@ -46,6 +46,7 @@ export default function ModuleInfo({ module, assignments }: ModuleInfoProp) {
     module.targetMark,
     incompleteAssignments,
   );
+
   return (
     <>
       <div className="grid grid-cols-16 gap-2">

@@ -184,10 +184,10 @@ export default function YearDetails() {
     });
   };
 
-  if (!yearInfo && !isLoading) {
+  if ((!yearInfo && !isLoading) || error) {
     return (
       <div className="ml-7 flex flex-col">
-        Could not find your data for year {id}
+        Something went wrong when finding your data for year {id}...
         <div className="flex gap-1">
           Details:
           {error ? (
@@ -200,10 +200,26 @@ export default function YearDetails() {
     );
   }
 
+  if (isLoading) {
+    return (
+      <>
+        <div className="mb-3 flex flex-col gap-2 pl-7">
+          <Skeleton className="mb-1 h-13 w-35" />
+          <Skeleton className="h-8 w-42" />
+        </div>
+
+        <div className="flex w-[70vw] flex-col gap-3 pl-7">
+          <Skeleton className="h-17" />
+          <Skeleton className="h-17" />
+          <Skeleton className="h-17" />
+          <Skeleton className="h-17" />
+        </div>
+      </>
+    );
+  }
+
   const context = {
     yearInfo,
-    isLoading,
-    error,
     openAddModuleModal,
     addModule,
     openEditModuleModal: setModuleToEdit,
@@ -220,98 +236,80 @@ export default function YearDetails() {
 
   return (
     <YearDetailsContext.Provider value={context}>
-      {isLoading ? (
-        <>
-          <div className="mb-3 flex flex-col gap-2 pl-7">
-            <Skeleton className="mb-1 h-13 w-35" />
-            <Skeleton className="h-8 w-42" />
+      <div className="flex flex-col gap-3 pl-7">
+        <section className="flex">
+          <div>
+            <YearDetailsHeader yearInfo={yearInfo} />
+            <h2 className="flex items-center">
+              <SquareStack className="mr-2 h-8 w-8" />
+              Modules{' '}
+              <div className="ml-2">
+                <DialogToolTip content='Each module has a "current mark average" displayed on its right, this is the current module mark out of JUST its completed assignments' />
+              </div>
+            </h2>
           </div>
+        </section>
+        <main className="flex w-[70vw] flex-col items-start pr-7">
+          {yearInfo && yearInfo.modules.length > 0 ? (
+            yearInfo.modules.map((module) => (
+              <ModuleAccordion key={module.id} module={module} />
+            ))
+          ) : (
+            <p className="mb-2">Looks like you have no modules! Create some!</p>
+          )}
 
-          <div className="flex w-[70vw] flex-col gap-3 pl-7">
-            <Skeleton className="h-17" />
-            <Skeleton className="h-17" />
-            <Skeleton className="h-17" />
-            <Skeleton className="h-17" />
-          </div>
-        </>
-      ) : (
-        <div className="flex flex-col gap-3 pl-7">
-          <section className="flex">
-            <div>
-              <YearDetailsHeader yearInfo={yearInfo} />
-              <h2 className="flex items-center">
-                <SquareStack className="mr-2 h-8 w-8" />
-                Modules{' '}
-                <div className="ml-2">
-                  <DialogToolTip content='Each module has a "current mark average" displayed on its right, this is the current module mark out of JUST its completed assignments' />
-                </div>
-              </h2>
-            </div>
-          </section>
-          <main className="flex w-[70vw] flex-col items-start pr-7">
-            {yearInfo && yearInfo.modules.length > 0 ? (
-              yearInfo.modules.map((module) => (
-                <ModuleAccordion key={module.id} module={module} />
-              ))
-            ) : (
-              <p className="mb-2">
-                Looks like you have no modules! Create some!
-              </p>
-            )}
+          <Button
+            className="ml-1 flex flex-col items-center justify-center rounded-sm bg-gray-700 text-gray-300 transition-all duration-300 ease-in-out hover:bg-white hover:text-gray-600"
+            onClick={() => openAddModuleModal()}
+          >
+            + Add new module
+          </Button>
 
-            <Button
-              className="ml-1 flex flex-col items-center justify-center rounded-sm bg-gray-700 text-gray-300 transition-all duration-300 ease-in-out hover:bg-white hover:text-gray-600"
-              onClick={() => openAddModuleModal()}
-            >
-              + Add new module
-            </Button>
+          <ModuleAddingDialog
+            isOpen={isModuleAddingModalOpen}
+            onClose={() => setIsModuleAddingModalOpen(false)}
+            yearId={yearInfo?.id ?? null}
+          />
 
-            <ModuleAddingDialog
-              isOpen={isModuleAddingModalOpen}
-              onClose={() => setIsModuleAddingModalOpen(false)}
-              yearId={yearInfo?.id ?? null}
-            />
+          <ModuleEditingDialog
+            isOpen={!!moduleToEdit}
+            onClose={() => setModuleToEdit(null)}
+            moduleData={moduleToEdit ?? null}
+          />
 
-            <ModuleEditingDialog
-              isOpen={!!moduleToEdit}
-              onClose={() => setModuleToEdit(null)}
-              moduleData={moduleToEdit ?? null}
-            />
+          <ModuleDeletingDialog
+            isOpen={!!moduleToDelete}
+            onClose={() => {
+              setModuleToDelete(null);
+            }}
+            moduleData={moduleToDelete ?? null}
+          />
 
-            <ModuleDeletingDialog
-              isOpen={!!moduleToDelete}
-              onClose={() => {
-                setModuleToDelete(null);
-              }}
-              moduleData={moduleToDelete ?? null}
-            />
+          <AssignmentAddingDialog
+            isOpen={!!moduleToAddNewAssignmentTo}
+            onClose={() => setModuleToAddNewAssignmentTo(null)}
+            moduleData={moduleToAddNewAssignmentTo}
+          />
 
-            <AssignmentAddingDialog
-              isOpen={!!moduleToAddNewAssignmentTo}
-              onClose={() => setModuleToAddNewAssignmentTo(null)}
-              moduleData={moduleToAddNewAssignmentTo}
-            />
+          <AssignmentEditingDialog
+            isOpen={!!assignmentToEdit}
+            onClose={() => {
+              setAssignmentToEdit(null);
+              setModuleToEdit(null);
+            }}
+            assignmentData={assignmentToEdit ?? null}
+            moduleData={moduleOfAssignmentToEdit ?? null}
+          />
 
-            <AssignmentEditingDialog
-              isOpen={!!assignmentToEdit}
-              onClose={() => {
-                setAssignmentToEdit(null);
-                setModuleToEdit(null);
-              }}
-              assignmentData={assignmentToEdit ?? null}
-              moduleData={moduleOfAssignmentToEdit ?? null}
-            />
-
-            <AssignmentDeletingDialog
-              isOpen={!!assignmentToDelete}
-              onClose={() => {
-                setAssignmentToDelete(null);
-              }}
-              assignmentData={assignmentToDelete ?? null}
-            />
-          </main>
-        </div>
-      )}
+          <AssignmentDeletingDialog
+            isOpen={!!assignmentToDelete}
+            onClose={() => {
+              setAssignmentToDelete(null);
+            }}
+            assignmentData={assignmentToDelete ?? null}
+          />
+        </main>
+      </div>
     </YearDetailsContext.Provider>
   );
 }

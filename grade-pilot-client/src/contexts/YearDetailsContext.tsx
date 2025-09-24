@@ -1,10 +1,8 @@
-import React, { useContext, createContext } from 'react';
+import { useContext, createContext } from 'react';
 import type { AcademicYearData, Module, AssignmentType } from '@/types';
 
 interface YearDetailsContextType {
   yearInfo: AcademicYearData | null;
-  isLoading: boolean;
-  error: string | null;
   openAddModuleModal: () => void;
   addModule: (newModule: Module) => void;
   openEditModuleModal: (module: Module) => void;

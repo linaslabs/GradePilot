@@ -84,7 +84,8 @@ export function calculatePilotResponse(
     return {
       moduleOverallMark: 0,
       classificationAchieved: '',
-      reqAvgMarkTarget: targetMark || 0, // Add the target if it exists, otherwise 0
+      reqAvgMarkTarget:
+        targetMark != null ? (targetMark === 0 ? null : targetMark) : 0, // Add the target if it exists, if its 0, then return null (automatically reached), otherwise 0
       reqAvgMarkPass: 40,
       reqAvgMarkTwoTwo: 50,
       reqAvgMarkTwoOne: 60,

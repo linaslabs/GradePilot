@@ -46,9 +46,8 @@ export default function ModuleEditingDialog({
 
   // "Normalising" the original moduleCode info, so if its "null" it is " '' " so it can be compared to the current state
   const originalModuleCodeString = moduleData?.moduleCode ?? '';
-  const originalTargetMarkString = moduleData?.targetMark
-    ? String(moduleData.targetMark)
-    : '';
+  const originalTargetMarkString =
+    moduleData?.targetMark != null ? String(moduleData.targetMark) : '';
 
   const moduleIsEdited =
     moduleTitle !== moduleData?.name ||
@@ -60,19 +59,31 @@ export default function ModuleEditingDialog({
     if (isOpen && moduleData) {
       setModuleTitle(moduleData.name);
       setModuleCredits(String(moduleData.credits));
-      if (moduleData.moduleCode) {
+      if (moduleData.moduleCode != null) {
         setModuleCode(moduleData.moduleCode);
       } else {
         setModuleCode('');
       }
 
-      if (moduleData.targetMark) {
+      if (moduleData.targetMark != null) {
         setModuleTargetMark(String(moduleData.targetMark));
       }
     }
   }, [isOpen, moduleData]);
   if (!moduleData) return null;
 
+  const resetAllFormState = () => {
+    setModuleTitle('');
+    setModuleCode('');
+    setModuleCredits('');
+    setModuleTargetMark('');
+    setFormError('');
+  };
+
+  const handleClose = () => {
+    resetAllFormState();
+    onClose();
+  };
   const submitNewModule = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -112,6 +123,7 @@ export default function ModuleEditingDialog({
 
       // Then use "onUpdate" to update info
       updateModule(data.module);
+      handleClose();
     } catch (error) {
       if (error instanceof Error) {
         setFormError(error.message);
