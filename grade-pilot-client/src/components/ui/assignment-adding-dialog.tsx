@@ -16,37 +16,35 @@ import { Input } from './input';
 import type { AssignmentType, Module } from '@/types';
 import { calculateModuleWeights } from '@/utils/calculations';
 
-interface AssignmentEditingDialogProps {
+interface AssignmentAddingDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  assignmentData: AssignmentType | null;
   moduleData: Module | null;
 }
 
 interface formData {
   title: string;
-  markPercent: number | null;
   weightingPercent: number;
+  markPercent: number | null;
+  moduleId: string | null;
 }
 
-export default function AssignmentEditingDialog({
+export default function AssignmentAddingDialog({
   isOpen,
   onClose,
-  assignmentData,
   moduleData,
-}: AssignmentEditingDialogProps) {
-  const { updateAssignment } = useYearDetails();
+}: AssignmentAddingDialogProps) {
+  const { addAssignment } = useYearDetails();
   const { token } = useAuth();
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const [assignmentTitle, setAssignmentTitle] = useState('');
   const [assignmentWeight, setAssignmentWeight] = useState('');
   const [assignmentMark, setAssignmentMark] = useState('');
+  const totalCurrentModuleWeight = moduleData
+    ? calculateModuleWeights(moduleData?.assignments)
+    : 0;
   const [currentCompletionStatus, setCurrentCompletionStatus] =
     useState('Incomplete');
-  const totalCurrentModuleWeight = moduleData
-    ? calculateModuleWeights(moduleData?.assignments) -
-      (assignmentData ? assignmentData?.weightingPercent : 0)
-    : 0;
   const [formError, setFormError] = useState('');
   const [completeMarkError, setCompleteMarkError] = useState('');
   const [invalidWeightError, setInvalidWeightError] = useState('');
@@ -56,7 +54,6 @@ export default function AssignmentEditingDialog({
     setAssignmentTitle('');
     setAssignmentWeight('');
     setAssignmentMark('');
-    setCurrentCompletionStatus('Incomplete');
     setFormError('');
     setCompleteMarkError('');
     setInvalidWeightError('');
@@ -67,39 +64,9 @@ export default function AssignmentEditingDialog({
     onClose();
   };
 
-  useEffect(() => {
-    if (isOpen && assignmentData) {
-      setAssignmentTitle(assignmentData.title);
-      setAssignmentWeight(String(assignmentData.weightingPercent));
-      if (
-        assignmentData.markPercent !== null &&
-        assignmentData.markPercent !== undefined
-      ) {
-        setAssignmentMark(String(assignmentData.markPercent));
-        setCurrentCompletionStatus('Complete');
-      } else {
-        setAssignmentMark('');
-        setCurrentCompletionStatus('Incomplete');
-      }
-    }
-  }, [isOpen, assignmentData]);
-
-  if (!assignmentData) return null;
-
-  const initialIsComplete = assignmentData.markPercent != null;
-
-  const originalMarkString =
-    assignmentData.markPercent == null
-      ? ''
-      : String(assignmentData.markPercent);
-
-  const assignmentIsEdited =
-    assignmentTitle !== assignmentData?.title ||
-    assignmentWeight !== String(assignmentData.weightingPercent) ||
-    initialIsComplete !== (currentCompletionStatus === 'Complete') ||
-    assignmentMark !== originalMarkString;
-
   const submitNewAssignment = async (e: React.FormEvent<HTMLFormElement>) => {
+    if (!moduleData) return;
+
     e.preventDefault();
 
     setIsSubmitting(true);
@@ -127,24 +94,19 @@ export default function AssignmentEditingDialog({
     const formData: formData = {
       title: assignmentTitle,
       weightingPercent: Number(assignmentWeight),
-      markPercent:
-        assignmentMark && currentCompletionStatus === 'Complete'
-          ? Number(assignmentMark)
-          : null,
+      moduleId: moduleData.id,
+      markPercent: assignmentMark ? Number(assignmentMark) : null,
     };
 
     try {
-      const response = await fetch(
-        `${apiUrl}/assignment/${assignmentData.id}`,
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(formData),
+      const response = await fetch(`${apiUrl}/assignment`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${token}`,
         },
-      );
+        body: JSON.stringify(formData),
+      });
 
       const data = await response.json();
 
@@ -155,8 +117,8 @@ export default function AssignmentEditingDialog({
         );
       }
 
+      addAssignment(moduleData.id, data.assignment);
       handleClose();
-      updateAssignment(data.assignment);
     } catch (error) {
       if (error instanceof Error) {
         setFormError(error.message);
@@ -172,10 +134,10 @@ export default function AssignmentEditingDialog({
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit Assignment</DialogTitle>
+          <DialogTitle>New Assignment</DialogTitle>
           <DialogDescription>
-            Fill in the details to update the Assignment below. Click "Edit"
-            when you're done.
+            Fill in the details for your new assignment below. <br /> Click
+            "Create" when you're done.
           </DialogDescription>
         </DialogHeader>
         <form
@@ -183,20 +145,20 @@ export default function AssignmentEditingDialog({
           onSubmit={submitNewAssignment}
         >
           <div className="space-y-2">
-            <Label htmlFor="edit-assignment-title">Title</Label>
+            <Label htmlFor="add-assignment-title">Title</Label>
             <Input
               type="text"
-              id="edit-assignment-title"
+              id="add-assignment-title"
               value={assignmentTitle}
               placeholder="e.g. Coursework"
               onChange={(e) => setAssignmentTitle(e.target.value)}
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="edit-assignment-weight">Module Weight</Label>
+            <Label htmlFor="add-assignment-weight">Module Weight</Label>
             <Input
               type="number"
-              id="edit-assignment-weight"
+              id="add-assignment-weight"
               value={assignmentWeight}
               min={0}
               max={100}
@@ -208,21 +170,23 @@ export default function AssignmentEditingDialog({
                 invalidWeightError ? 'border-red-400 ring-red-400' : ''
               }
             />
+            {invalidWeightError && (
+              <p className="text-center text-[13px] text-red-400">
+                {invalidWeightError}
+              </p>
+            )}
           </div>
-          {invalidWeightError && (
-            <p className="mt-[-10px] text-center text-[13px] text-red-400">
-              {invalidWeightError}
-            </p>
-          )}
           <div className="space-y-2">
             <Label>Status</Label>
             <ToggleGroup
               variant="outline"
               type="single"
               className="w-full"
-              value={currentCompletionStatus}
               onValueChange={(value) => {
                 setCurrentCompletionStatus(value);
+                if (currentCompletionStatus === 'Incomplete') {
+                  setAssignmentMark('');
+                }
                 setCompleteMarkError('');
               }}
             >
@@ -233,10 +197,10 @@ export default function AssignmentEditingDialog({
           {currentCompletionStatus === 'Complete' && (
             <>
               <div className="space-y-2">
-                <Label htmlFor="edit-assignment-mark">Mark</Label>
+                <Label htmlFor="add-assignment-mark">Mark</Label>
                 <Input
                   type="number"
-                  id="edit-assignment-mark"
+                  id="add-assignment-mark"
                   value={assignmentMark}
                   min={0}
                   max={100}
@@ -256,8 +220,8 @@ export default function AssignmentEditingDialog({
             </>
           )}
 
-          <Button type="submit" disabled={isSubmitting || !assignmentIsEdited}>
-            {isSubmitting ? 'Editing...' : 'Edit'}
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Creating...' : 'Create'}
           </Button>
         </form>
         {formError && <p className="text-center text-red-400">{formError}</p>}

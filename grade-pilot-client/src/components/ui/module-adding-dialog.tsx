@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
-import { useYearDetails } from '@/contexts/YearDetailsContext';
 import DialogToolTip from './dialogToolTip';
 import {
   Dialog,
@@ -13,28 +12,29 @@ import {
 import { Button } from './button';
 import { Label } from './label';
 import { Input } from './input';
-import type { Module } from '@/types';
+import { useYearDetails } from '@/contexts/YearDetailsContext';
 
-interface ModuleEditingDialogProps {
+interface ModuleAddingDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  moduleData: Module | null;
+  yearId: string | null;
 }
 
 interface formData {
   name: string;
   credits: number;
-  moduleCode: string | null;
-  targetMark: number | null;
+  academicYearId: string | null;
+  moduleCode?: string | null;
+  targetMark?: number | null;
 }
 
-export default function ModuleEditingDialog({
+export default function ModuleAddingDialog({
   isOpen,
   onClose,
-  moduleData,
-}: ModuleEditingDialogProps) {
-  const { updateModule } = useYearDetails();
+  yearId,
+}: ModuleAddingDialogProps) {
   const { token } = useAuth();
+  const { addModule } = useYearDetails();
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const [moduleTitle, setModuleTitle] = useState('');
   const [moduleCode, setModuleCode] = useState('');
@@ -44,39 +44,28 @@ export default function ModuleEditingDialog({
   const [formError, setFormError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // "Normalising" the original moduleCode info, so if its "null" it is " '' " so it can be compared to the current state
-  const originalModuleCodeString = moduleData?.moduleCode ?? '';
-  const originalTargetMarkString = moduleData?.targetMark
-    ? String(moduleData.targetMark)
-    : '';
+  const clearFormState = () => {
+    setModuleTitle('');
+    setModuleCode('');
+    setModuleCredits('');
+    setModuleTargetMark('');
+    setFormError('');
+  };
 
-  const moduleIsEdited =
-    moduleTitle !== moduleData?.name ||
-    moduleCode !== originalModuleCodeString ||
-    moduleCredits !== String(moduleData.credits) ||
-    moduleTargetMark !== originalTargetMarkString;
-
-  useEffect(() => {
-    if (isOpen && moduleData) {
-      setModuleTitle(moduleData.name);
-      setModuleCredits(String(moduleData.credits));
-      if (moduleData.moduleCode) {
-        setModuleCode(moduleData.moduleCode);
-      } else {
-        setModuleCode('');
-      }
-
-      if (moduleData.targetMark) {
-        setModuleTargetMark(String(moduleData.targetMark));
-      }
-    }
-  }, [isOpen, moduleData]);
-  if (!moduleData) return null;
+  const handleClose = () => {
+    clearFormState();
+    onClose();
+  };
 
   const submitNewModule = async (e: React.FormEvent<HTMLFormElement>) => {
+    // If statement to remove typescript error as yearId could be null
+    if (!yearId) {
+      return;
+    }
     e.preventDefault();
 
     setIsSubmitting(true);
+
     if (!moduleTitle || !moduleCredits) {
       // Could instead throw error and handle in error handler? need to check if modal is open and type "error"
       setFormError('Please fill in all required fields');
@@ -87,13 +76,14 @@ export default function ModuleEditingDialog({
     const formData: formData = {
       name: moduleTitle,
       credits: Number(moduleCredits),
+      academicYearId: yearId,
       moduleCode: moduleCode || null,
       targetMark: moduleTargetMark ? Number(moduleTargetMark) : null,
     };
 
     try {
-      const response = await fetch(`${apiUrl}/module/${moduleData.id}`, {
-        method: 'PATCH',
+      const response = await fetch(`${apiUrl}/module`, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           authorization: `Bearer ${token}`,
@@ -110,11 +100,11 @@ export default function ModuleEditingDialog({
         );
       }
 
-      // Then use "onUpdate" to update info
-      updateModule(data.module);
+      addModule(data.module);
+      handleClose();
     } catch (error) {
       if (error instanceof Error) {
-        setFormError(error.message);
+        setFormError(error.message); // Could this be setError instead?
       } else {
         setFormError('An unexpected error occurred... Try again later');
       }
@@ -124,13 +114,13 @@ export default function ModuleEditingDialog({
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit Module</DialogTitle>
+          <DialogTitle>New Module</DialogTitle>
           <DialogDescription>
-            Fill in the details to update the module below. Click "Edit" when
-            you're done.
+            Fill in the details for your new module below. <br /> Click "Create"
+            when you're done.
           </DialogDescription>
         </DialogHeader>
         <form
@@ -138,36 +128,37 @@ export default function ModuleEditingDialog({
           onSubmit={submitNewModule}
         >
           <div className="space-y-2">
-            <Label htmlFor="edit-module-code" className="flex gap-1">
-              Code
+            <Label htmlFor="add-module-code" className="flex gap-1">
+              Code{' '}
               <span className="text-muted-foreground text-xs">(Optional)</span>
             </Label>
             <Input
               type="text"
-              id="edit-module-code"
+              id="add-module-code"
               value={moduleCode}
               placeholder="e.g. CS175"
               onChange={(e) => setModuleCode(e.target.value)}
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="edit-module-title">Title</Label>
+            <Label htmlFor="add-module-title">Title</Label>
             <Input
               type="text"
-              id="edit-module-title"
+              id="add-module-title"
               value={moduleTitle}
               placeholder="e.g. Programming For Computer Scientists"
               onChange={(e) => setModuleTitle(e.target.value)}
             />
           </div>
+
           <div className="space-y-2">
-            <Label htmlFor="edit-module-cats" className="flex gap-1">
+            <Label htmlFor="add-module-cats" className="flex gap-1">
               Credits
               <DialogToolTip content="CATS - A standard part of the UK credit system. Ratio of this number to the total year CATS is the weighting of the module on the year" />
             </Label>
             <Input
               type="number"
-              id="edit-module-cats"
+              id="add-module-cats"
               value={moduleCredits}
               min={1}
               // Add max value?
@@ -178,7 +169,7 @@ export default function ModuleEditingDialog({
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="edit-module-targetMark" className="flex gap-1">
+            <Label htmlFor="add-module-targetMark" className="flex gap-1">
               Target Mark
               <DialogToolTip content="This is the mark from 0-100% you hope to achieve for this module overall" />
               <span className="text-muted-foreground text-xs">(Optional)</span>
@@ -188,15 +179,15 @@ export default function ModuleEditingDialog({
               value={moduleTargetMark}
               min={0}
               max={100}
-              id="edit-module-targetMark"
+              id="add-module-targetMark"
               onChange={(e) => setModuleTargetMark(e.target.value)}
               onKeyDown={(evt) =>
                 ['e', 'E', '+', '-'].includes(evt.key) && evt.preventDefault()
               }
             />
           </div>
-          <Button type="submit" disabled={isSubmitting || !moduleIsEdited}>
-            {isSubmitting ? 'Editing...' : 'Edit'}
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Creating...' : 'Create'}
           </Button>
         </form>
         {formError && <p className="text-center text-red-400">{formError}</p>}

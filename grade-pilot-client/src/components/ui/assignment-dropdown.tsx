@@ -1,4 +1,6 @@
 import React from 'react';
+import { useYearDetails } from '@/contexts/YearDetailsContext';
+import { useModule } from '@/contexts/ModuleContext';
 import { MoreVertical } from 'lucide-react';
 import {
   DropdownMenu,
@@ -12,18 +14,18 @@ import { Button } from './button';
 import type { AssignmentType } from '@/types';
 
 interface AssignmentDropdownProps {
-  editAssignmentFunction: () => void;
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
-  deleteAssignmentFunction: () => void;
+  assignmentData: AssignmentType;
 }
 
 export default function AssignmentDropdown({
-  editAssignmentFunction,
   isOpen,
   onOpenChange,
-  deleteAssignmentFunction,
+  assignmentData,
 }: AssignmentDropdownProps) {
+  const { openEditAssignmentModal, openDeleteAssignmentModal } =
+    useYearDetails();
   return (
     <DropdownMenu open={isOpen} onOpenChange={onOpenChange}>
       <DropdownMenuTrigger asChild>
@@ -32,10 +34,14 @@ export default function AssignmentDropdown({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem onClick={editAssignmentFunction}>
+        <DropdownMenuItem
+          onClick={() => openEditAssignmentModal(assignmentData)}
+        >
           Edit
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={deleteAssignmentFunction}>
+        <DropdownMenuItem
+          onClick={() => openDeleteAssignmentModal(assignmentData)}
+        >
           Delete
         </DropdownMenuItem>
       </DropdownMenuContent>

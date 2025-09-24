@@ -5,11 +5,17 @@ interface YearDetailsContextType {
   yearInfo: AcademicYearData | null;
   isLoading: boolean;
   error: string | null;
-  addModule: () => void;
+  openAddModuleModal: () => void;
+  addModule: (newModule: Module) => void;
+  openEditModuleModal: (module: Module) => void;
   updateModule: (updatedModule: Module) => void;
+  openDeleteModuleModal: (module: Module) => void;
   deleteModule: (moduleId: string) => void;
+  openAddAssignmentModal: (module: Module) => void;
   addAssignment: (moduleId: string, newAssignment: AssignmentType) => void;
+  openEditAssignmentModal: (assignment: AssignmentType) => void;
   updateAssignment: (updatedAssignment: AssignmentType) => void;
+  openDeleteAssignmentModal: (assignment: AssignmentType) => void;
   deleteAssignment: (assignmentId: string) => void;
 }
 

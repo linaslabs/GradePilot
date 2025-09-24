@@ -5,18 +5,14 @@ import { gradeFormatter } from '@/utils/formatting';
 
 interface AssignmentProp {
   assignment: AssignmentType;
-  editAssignmentFunction: () => void;
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
-  deleteAssignmentFunction: () => void;
 }
 
 export default function assignment({
   assignment,
-  editAssignmentFunction,
   isOpen,
   onOpenChange,
-  deleteAssignmentFunction,
 }: AssignmentProp) {
   return (
     <div className="mt-2 mr-1 mb-2 flex items-center justify-between gap-2 rounded-sm pt-2 pr-5 pb-2 pl-5 text-white outline-4 outline-gray-600">
@@ -70,10 +66,9 @@ export default function assignment({
           </div>
         )}
         <AssignmentDropdown
-          editAssignmentFunction={editAssignmentFunction}
           isOpen={isOpen}
           onOpenChange={onOpenChange}
-          deleteAssignmentFunction={deleteAssignmentFunction}
+          assignmentData={assignment}
         />
       </div>
     </div>
