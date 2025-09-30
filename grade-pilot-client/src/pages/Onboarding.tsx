@@ -8,7 +8,7 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 
 interface YearData {
   yearNumber: number;
-  weightingPercent: number;
+  weightingPercent?: number;
   targetClassification?: string;
 }
 
@@ -54,7 +54,8 @@ export default function Onboarding() {
     for (let index = 0; index < totalLengthYears; index++) {
       yearData[index] = {
         yearNumber: index + 1,
-        weightingPercent: 10, // PLACEHOLDER VALUE
+        totalCredits: undefined,
+        weightingPercent: undefined,
         targetClassification: undefined,
       };
     }

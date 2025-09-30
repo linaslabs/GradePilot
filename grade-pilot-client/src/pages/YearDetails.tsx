@@ -11,7 +11,13 @@ import AssignmentEditingDialog from '@/components/ui/assignment-editing-dialog';
 import AssignmentAddingDialog from '@/components/ui/assignment-adding-dialog';
 import AssignmentDeletingDialog from '@/components/ui/assignment-deleting-dialog';
 import ModuleDeletingDialog from '@/components/ui/module-deleting-dialog';
-import type { AcademicYearData, AssignmentType, Module } from '@/types';
+import YearSettingsDialog from '@/components/ui/year-settings-dialog';
+import type {
+  AcademicYearData,
+  AssignmentType,
+  Module,
+  YearSettings,
+} from '@/types';
 import YearDetailsHeader from '@/components/ui/yearDetailsHeader';
 import { SquareStack } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -37,6 +43,19 @@ export default function YearDetails() {
     : null;
   const [assignmentToDelete, setAssignmentToDelete] =
     useState<AssignmentType | null>(null);
+
+  const [isYearSettingsDialogOpen, setIsYearSettingsDialogOpen] =
+    useState(false);
+  interface YearSettingsData {
+    totalCredits?: number; // number | undefined encapsulates "null" as well
+    weightingPercent?: number;
+    targetMark?: number;
+  }
+  const yearSettingsData: YearSettingsData = {
+    totalCredits: yearInfo?.totalCredits,
+    weightingPercent: yearInfo?.weightingPercent,
+    targetMark: yearInfo?.targetMark,
+  };
 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
@@ -184,6 +203,22 @@ export default function YearDetails() {
     });
   };
 
+  const updateYear = (updatedYearSettings: YearSettings) => {
+    setYearInfo((currentYearInfo) => {
+      if (!currentYearInfo) return null;
+      return {
+        ...currentYearInfo,
+        totalCredits: updatedYearSettings.totalCredits,
+        weightingPercent: updatedYearSettings.weightingPercent,
+        targetMark: updatedYearSettings.targetMark,
+      };
+    });
+  };
+
+  const openYearSettingsModal = () => {
+    setIsYearSettingsDialogOpen(true);
+  };
+
   if ((!yearInfo && !isLoading) || error) {
     return (
       <div className="ml-7 flex flex-col">
@@ -232,6 +267,8 @@ export default function YearDetails() {
     updateAssignment,
     openDeleteAssignmentModal: setAssignmentToDelete,
     deleteAssignment,
+    updateYear,
+    openYearSettingsModal,
   };
 
   return (
@@ -307,6 +344,12 @@ export default function YearDetails() {
               setAssignmentToDelete(null);
             }}
             assignmentData={assignmentToDelete ?? null}
+          />
+
+          <YearSettingsDialog
+            isOpen={isYearSettingsDialogOpen}
+            onClose={() => setIsYearSettingsDialogOpen(false)}
+            yearSettingsData={yearSettingsData}
           />
         </main>
       </div>

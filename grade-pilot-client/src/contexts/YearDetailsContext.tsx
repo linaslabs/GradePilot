@@ -1,5 +1,10 @@
 import { useContext, createContext } from 'react';
-import type { AcademicYearData, Module, AssignmentType } from '@/types';
+import type {
+  AcademicYearData,
+  Module,
+  AssignmentType,
+  YearSettings,
+} from '@/types';
 
 interface YearDetailsContextType {
   yearInfo: AcademicYearData | null;
@@ -15,6 +20,8 @@ interface YearDetailsContextType {
   updateAssignment: (updatedAssignment: AssignmentType) => void;
   openDeleteAssignmentModal: (assignment: AssignmentType) => void;
   deleteAssignment: (assignmentId: string) => void;
+  updateYear: (updatedYearSettings: YearSettings) => void;
+  openYearSettingsModal: () => void;
 }
 
 export const YearDetailsContext = createContext<

@@ -78,7 +78,7 @@ export default function ModuleInfo({ module, assignments }: ModuleInfoProp) {
         </div>
 
         <div
-          className={`col-span-12 flex gap-3 rounded-sm ${totalAssignmentsWeight === 100 && isModuleComplete ? 'bg-green-600' : 'bg-gray-600'} ${totalAssignmentsWeight !== 100 ? 'opacity-30' : 'opacity-100'} pt-2 pr-5 pb-2 pl-5 text-white transition-opacity duration-400`}
+          className={`col-span-12 flex gap-3 rounded-sm ${totalAssignmentsWeight === 100 && isModuleComplete ? (pilotResponseObject.moduleOverallMark < 40 ? 'bg-red-600' : 'bg-green-600') : 'bg-gray-600'} ${totalAssignmentsWeight !== 100 ? 'opacity-30' : 'opacity-100'} pt-2 pr-5 pb-2 pl-5 text-white transition-opacity duration-400`}
         >
           <img src="/pilot.png" alt="pilot" className="h-11 w-11" />
           <div className="flex-col items-start">

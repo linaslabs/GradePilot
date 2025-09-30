@@ -46,7 +46,7 @@ export default function ModuleAccordion({ module }: ModuleProp) {
               </h3>
               <div className="flex gap-2">
                 <div
-                  className={`flex flex-col items-center rounded-xl ${isModuleComplete ? 'bg-green-600' : 'bg-gray-600'} p-2 text-white`}
+                  className={`flex flex-col items-center rounded-xl ${isModuleComplete ? (gradeFormatter(currentMarkRelative) < 40 ? 'bg-red-600' : 'bg-green-400') : 'bg-gray-600'} p-2 text-white`}
                 >
                   <p>{gradeFormatter(currentMarkRelative)}%</p>
                 </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { AssignmentType } from '@/types';
+import type { AssignmentType, Module } from '@/types';
 import { gradeFormatter } from './formatting';
 
 interface FinalResponse {
@@ -74,6 +74,19 @@ function classifyMark(mark: number): string {
   }
 }
 
+function calculateOverallModuleMark(assignments: AssignmentType[]) {
+  let moduleOverallMark = 0;
+
+  assignments.forEach((assignment) => {
+    if (assignment.markPercent != null) {
+      moduleOverallMark +=
+        assignment.markPercent * (assignment.weightingPercent / 100);
+    }
+  });
+
+  return moduleOverallMark;
+}
+
 export function calculatePilotResponse(
   assignments: AssignmentType[],
   targetMark: number | null | undefined,
@@ -93,23 +106,13 @@ export function calculatePilotResponse(
     };
   }
 
-  let moduleOverallMark = 0;
-
   let incompleteAssignmentsTotalWeightings = 0;
   incompleteAssignments.forEach((assignment) => {
     incompleteAssignmentsTotalWeightings += assignment.weightingPercent;
   });
 
   // Calculating currentModuleMark relative to 100%
-  assignments.forEach((assignment) => {
-    if (assignment.markPercent != null) {
-      moduleOverallMark +=
-        assignment.markPercent * (assignment.weightingPercent / 100);
-    }
-  });
-
-  // CALCULATION LOGIC:
-  // -------------------------------------
+  const moduleOverallMark = calculateOverallModuleMark(assignments);
 
   // IF ALL ASSIGNMENTS COMPLETED
   if (incompleteAssignmentsTotalWeightings === 0) {
@@ -153,4 +156,80 @@ export function calculatePilotResponse(
   };
 
   return finalResponse;
+}
+
+export function yearPilotReached(modules?: Module[], totalCredits?: number) {
+  if (totalCredits == null || !modules)
+    return { isReached: false, totalModuleCredits: 0 };
+
+  let totalModuleCredits = 0;
+  modules.forEach((module) => {
+    totalModuleCredits += module.credits;
+  });
+
+  if (totalCredits === totalModuleCredits) {
+    return { isReached: true, totalModuleCredits: totalModuleCredits };
+  }
+
+  return { isReached: false, totalModuleCredits: totalModuleCredits };
+}
+
+export function calculateYearStats(modules: Module[], yearCredits?: number) {
+  let lowestProjected = 0;
+  let projected = 0;
+  let highestProjected = 0;
+  let moduleCompleteCount = 0;
+
+  modules.forEach((module) => {
+    let moduleIsComplete = true;
+    let moduleOverallMark = 0;
+    let assignmentsTotalWeight = 0;
+
+    for (const assignment of module.assignments) {
+      // Using for loop instead of foreach because I want to break if module is incomplete
+      assignmentsTotalWeight += assignment.weightingPercent;
+      if (assignment.markPercent == null) {
+        moduleIsComplete = false;
+        break;
+      } else {
+        moduleOverallMark +=
+          assignment.markPercent * (assignment.weightingPercent / 100);
+      }
+    }
+
+    // If assignments arent fully completed anyway, then the module is incomplete this way too
+    if (assignmentsTotalWeight !== 100) {
+      moduleIsComplete = false;
+    }
+
+    const moduleMarkWeighting = module.credits / (yearCredits ?? 1);
+
+    if (moduleIsComplete) {
+      moduleCompleteCount++;
+      const securedMark = moduleOverallMark * moduleMarkWeighting;
+      projected += securedMark;
+      lowestProjected += securedMark;
+      highestProjected += securedMark;
+    } else {
+      projected += (module.targetMark ?? 40) * moduleMarkWeighting; // If module target mark doesn't exist, assume pass
+      highestProjected += 100 * moduleMarkWeighting;
+      // Worst case is the rest of the modules score 0
+    }
+  });
+
+  // If year is completed, return the object with isYearCompleted as true
+  if (moduleCompleteCount === modules.length) {
+    return {
+      highestProjected: gradeFormatter(highestProjected),
+      lowestProjected: gradeFormatter(lowestProjected),
+      projected: gradeFormatter(projected),
+      isYearCompleted: true,
+    };
+  }
+  return {
+    highestProjected: gradeFormatter(highestProjected),
+    lowestProjected: gradeFormatter(lowestProjected),
+    projected: gradeFormatter(projected),
+    isYearCompleted: false,
+  };
 }

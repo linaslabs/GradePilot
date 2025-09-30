@@ -37,29 +37,29 @@ export const getAcademicYear = async (req, res) => {
 // Year objects created when degree created
 
 export const updateAcademicYear = async (req, res) => {
-  // Editing year weighting and target classification
-  const { yearNumber, newYearWeighting, newTargetClassification } = req.body;
+  // Editing year weighting and target mark
+  const { yearId, newYearTotalCredits, newYearWeighting, newYearMark } =
+    req.body;
 
   const updatingData = {};
 
-  if (newYearWeighting) {
+  if (newYearWeighting != null) {
     updatingData.weightingPercent = newYearWeighting;
   }
-  if (newTargetClassification) {
-    updatingData.targetClassification = newTargetClassification;
+  if (newYearMark != null) {
+    updatingData.targetMark = newYearMark;
+  }
+  if (newYearTotalCredits != null) {
+    updatingData.totalCredits = newYearTotalCredits;
   }
 
-  await prisma.academicYear.update({
+  const newYear = await prisma.academicYear.update({
     where: {
-      yearNumber: yearNumber,
-
-      degree: {
-        userId: req.user.userId,
-      },
+      id: yearId,
     },
 
     data: updatingData,
   });
 
-  res.sendStatus(200);
+  res.status(200).json({ updatedSettings: updatingData });
 };

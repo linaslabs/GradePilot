@@ -59,7 +59,7 @@ export const createDegree = async (req, res) => {
         },
 
         academicYears: {
-          create: yearData, // Need to add year weightings when compiling the yearData
+          create: yearData, 
         },
       },
     }),

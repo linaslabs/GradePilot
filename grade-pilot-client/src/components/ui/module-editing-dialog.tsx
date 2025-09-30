@@ -21,7 +21,7 @@ interface ModuleEditingDialogProps {
   moduleData: Module | null;
 }
 
-interface formData {
+interface FormData {
   name: string;
   credits: number;
   moduleCode: string | null;
@@ -95,7 +95,7 @@ export default function ModuleEditingDialog({
       return;
     }
 
-    const formData: formData = {
+    const FormData: FormData = {
       name: moduleTitle,
       credits: Number(moduleCredits),
       moduleCode: moduleCode || null,
@@ -109,7 +109,7 @@ export default function ModuleEditingDialog({
           'Content-Type': 'application/json',
           authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(FormData),
       });
 
       const data = await response.json();

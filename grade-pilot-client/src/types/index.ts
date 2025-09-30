@@ -33,7 +33,14 @@ export interface Degree {
 export interface AcademicYearData {
   id: string;
   yearNumber: number;
-  weightingPercent: number;
-  targetClassification?: string;
+  totalCredits?: number;
+  weightingPercent?: number;
+  targetMark?: number;
   modules: Module[];
+}
+
+export interface YearSettings { // This is for after the user has configured, the values of YearSettings can no longer be null
+  totalCredits: number;
+  weightingPercent: number;
+  targetMark: number;
 }

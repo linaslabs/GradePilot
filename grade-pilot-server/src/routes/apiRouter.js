@@ -4,6 +4,7 @@ import academicYearRouter from "./academicYearRouter.js";
 import moduleRouter from "./moduleRouter.js";
 import assignmentRouter from "./assignmentRouter.js";
 import authRouter from "./authRouter.js";
+import { deleteUser } from "../controllers/userController.js";
 
 import authMiddleware from "../middleware/auth.js";
 
@@ -17,5 +18,8 @@ router.use("/degree", degreeRouter);
 router.use("/year", academicYearRouter);
 router.use("/module", moduleRouter);
 router.use("/assignment", assignmentRouter);
+
+// Following does not need its own router
+router.delete("/user", deleteUser);
 
 export default router;
