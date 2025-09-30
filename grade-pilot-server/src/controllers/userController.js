@@ -1,3 +1,4 @@
+import React from "react";
 import prisma from "../lib/prisma.js";
 
 export const deleteUser = async (req, res) => {
@@ -5,5 +6,5 @@ export const deleteUser = async (req, res) => {
 
   await prisma.user.delete({ where: { id: userId } });
 
-  res.sendStatus(200);
+  res.sendStatus(204);
 };

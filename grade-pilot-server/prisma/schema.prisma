@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
@@ -42,7 +42,7 @@ model Degree {
   currentYear          Int
   targetClassification DegreeClassification?
 
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique
 
   academicYears AcademicYear[]
@@ -55,7 +55,7 @@ model AcademicYear {
   weightingPercent Int?
   targetMark       Int?
 
-  degree   Degree @relation(fields: [degreeId], references: [id])
+  degree   Degree @relation(fields: [degreeId], references: [id], onDelete: Cascade)
   degreeId String
 
   modules Module[]
@@ -72,7 +72,7 @@ model Module {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  academicYear   AcademicYear @relation(fields: [academicYearId], references: [id])
+  academicYear   AcademicYear @relation(fields: [academicYearId], references: [id], onDelete: Cascade)
   academicYearId String
 
   assignments Assignment[]
@@ -84,6 +84,6 @@ model Assignment {
   markPercent      Int?
   weightingPercent Int
 
-  module   Module @relation(fields: [moduleId], references: [id])
+  module   Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
   moduleId String
 }
