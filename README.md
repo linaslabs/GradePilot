@@ -7,6 +7,8 @@ During last year's exam period, I was always anxious about my performance in the
 I didn't have time back then, but now I do. I've created an app that solves everything I need. Currently needs the finishing touches, but if you find it useful, I don't mind you using it either! (Don't make me pay for a database)
 
 ## Design:
+UPDATED DESIGN: Including year information <br/>
+<img width="1693" height="965" alt="Image" src="https://github.com/user-attachments/assets/89db8825-d007-4829-bcb7-c899f2130ce6" />
 Module with no assignments: <br/>
 <img width="1754" height="679" alt="Image" src="https://github.com/user-attachments/assets/8a8821bb-2b6e-45b5-8688-603881c99f92" />
 Module with assignments added but assignments incomplete: <br/>
@@ -38,6 +40,7 @@ A detailed "Overview" page with year-on-year progress to track years at-a-glance
 The ability for users to edit their core degree information after onboarding.
 More pilot features!
 Support for multiple degree programs per user.
+
 
 
 
