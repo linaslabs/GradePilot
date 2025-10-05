@@ -15,6 +15,11 @@ Module with assignments added but assignments incomplete: <br/>
 <img width="1756" height="984" alt="Image" src="https://github.com/user-attachments/assets/8c531352-95f3-4135-8fa5-5b3f065e4e7f" />
 Module with all assignments added and complete: <br/>
 <img width="1755" height="957" alt="Image" src="https://github.com/user-attachments/assets/0ae28ca4-f750-4cc0-838f-2d84701e66c8" />
+<br/>
+Brief Showcase:
+https://github.com/user-attachments/assets/41bed0ad-65bb-4bde-941c-f6147bd94ea4
+
+
 
 ## Key Features:
 **🛡️ Secure Authentication:** Full user registration and login system using JWT for secure, stateless authentication. <br/>
@@ -40,6 +45,7 @@ A detailed "Overview" page with year-on-year progress to track years at-a-glance
 The ability for users to edit their core degree information after onboarding.
 More pilot features!
 Support for multiple degree programs per user.
+
 
 
 
