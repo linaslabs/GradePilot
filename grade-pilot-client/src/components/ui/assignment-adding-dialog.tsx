@@ -160,7 +160,7 @@ export default function AssignmentAddingDialog({
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="add-assignment-weight">Module Weight</Label>
+            <Label htmlFor="add-assignment-weight">Assignment Weight</Label>
             <Input
               type="number"
               id="add-assignment-weight"
