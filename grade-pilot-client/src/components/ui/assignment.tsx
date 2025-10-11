@@ -38,7 +38,7 @@ export default function assignment({
         {assignment.markPercent !== null &&
         assignment.markPercent !== undefined ? (
           <div className="flex items-center gap-3 text-green-400">
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center justify-center">
               <span className="text-[12px]">Final Mark Contribution</span>
               <span className="text-[20px]">
                 {gradeFormatter(
