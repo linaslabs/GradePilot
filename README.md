@@ -2,19 +2,12 @@
 # GradePilot 🎓- Academic Progress Tracker
 An intelligent, full-stack web application designed to help UK university students track, manage, and predict their academic grades.
 
-## My Problem:
-During last year's exam period, I was always anxious about my performance in the final exam. I wanted to know exactly what I needed in my exams and coursework to achieve my targets. <br/> <br/> I had to calculate to find out the information. This wasn't ideal, I wanted it to be easy and quick to access. <br/> <br/>
-I didn't have time back then, but now I do. I've created an app that solves everything I need. Currently needs the finishing touches, but if you find it useful, I don't mind you using it either! (Don't make me pay for a database)
+## Tech Stack:
+This project is a full-stack application built with the modern, type-safe PERN (PostgreSQL, Express, React, Node.js) stack.
 
-## Design:
-UPDATED DESIGN: Including year information <br/>
-<img width="1693" height="965" alt="Image" src="https://github.com/user-attachments/assets/89db8825-d007-4829-bcb7-c899f2130ce6" />
-Module with no assignments: <br/>
-<img width="1754" height="679" alt="Image" src="https://github.com/user-attachments/assets/8a8821bb-2b6e-45b5-8688-603881c99f92" />
-Module with assignments added but assignments incomplete: <br/>
-<img width="1756" height="984" alt="Image" src="https://github.com/user-attachments/assets/8c531352-95f3-4135-8fa5-5b3f065e4e7f" />
-Module with all assignments added and complete: <br/>
-<img width="1755" height="957" alt="Image" src="https://github.com/user-attachments/assets/0ae28ca4-f750-4cc0-838f-2d84701e66c8" />
+**💻 Front-End:** React, TypeScript, Vite, Tailwind CSS, shadcn/ui, React Router <br/>
+**🗃️ Back-End and Database:** Node.js, Express.js, PostgreSQL, Prisma (ORM) Supabase (Hosting), JWT <br/>
+**☁️ Deployment:** Vercel (Client), Render (Server) <br/>
 
 ## Key Features:
 **🛡️ Secure Authentication:** Full user registration and login system using JWT for secure, stateless authentication. <br/>
@@ -26,12 +19,23 @@ Module with all assignments added and complete: <br/>
 [![Status:](https://img.shields.io/badge/Status-In_Progress-yellow?style=for-the-badge)]()
 
 
-## Tech Stack:
-This project is a full-stack application built with the modern, type-safe PERN (PostgreSQL, Express, React, Node.js) stack.
+## My Problem:
+During last year's exam period, I was always anxious about my performance in the final exam. I wanted to know exactly what I needed in my exams and coursework to achieve my targets. <br/> <br/> I had to calculate to find out the information. This wasn't ideal, I wanted it to be easy and quick to access. <br/> <br/>
+I didn't have time back then, but now I do. I've created an app that solves everything I need. Currently needs the finishing touches, but if you find it useful, I don't mind you using it either! (Don't make me pay for a database)
 
-**💻 Front-End:** React, TypeScript, Vite, Tailwind CSS, shadcn/ui, React Router <br/>
-**🗃️ Back-End and Database:** Node.js, Express.js, PostgreSQL, Prisma (ORM) Supabase (Hosting), JWT <br/>
-**☁️ Deployment:** Vercel (Client), Render (Server) <br/>
+## Design:
+UPDATED DESIGN: Including year information <br/>
+<img width="1000" height="600" alt="Image" src="https://github.com/user-attachments/assets/89db8825-d007-4829-bcb7-c899f2130ce6" />
+Module with no assignments: <br/>
+<img width="1754" height="679" alt="Image" src="https://github.com/user-attachments/assets/8a8821bb-2b6e-45b5-8688-603881c99f92" />
+Module with assignments added but assignments incomplete: <br/>
+<img width="1756" height="984" alt="Image" src="https://github.com/user-attachments/assets/8c531352-95f3-4135-8fa5-5b3f065e4e7f" />
+Module with all assignments added and complete: <br/>
+<img width="1755" height="957" alt="Image" src="https://github.com/user-attachments/assets/0ae28ca4-f750-4cc0-838f-2d84701e66c8" />
+<br/>
+Brief Showcase:
+https://github.com/user-attachments/assets/41bed0ad-65bb-4bde-941c-f6147bd94ea4
+
 
 ## Project Status:
 This project is almost done! The core functionality for user authentication, data management, and the dashboard is more or less complete.
@@ -40,6 +44,9 @@ A detailed "Overview" page with year-on-year progress to track years at-a-glance
 The ability for users to edit their core degree information after onboarding.
 More pilot features!
 Support for multiple degree programs per user.
+
+
+
 
 
 
