@@ -18,6 +18,9 @@ export const getDegree = async (req, res) => {
             },
           },
         },
+        orderBy: {
+          yearNumber: "asc",
+        },
       },
     },
   });
@@ -59,7 +62,7 @@ export const createDegree = async (req, res) => {
         },
 
         academicYears: {
-          create: yearData, 
+          create: yearData,
         },
       },
     }),
