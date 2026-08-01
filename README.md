@@ -16,7 +16,6 @@ This project is a full-stack application built with the modern, type-safe PERN (
 **✈️ The "Pilot" Engine:** The core feature of the application. The Pilot is a smart calculator and predictor that provides real-time, actionable insights for the user's progress. Exactly what you may need for your own academic peace-of-mind!
 
 [![Live Demo:](https://img.shields.io/badge/Live_Demo-Vercel-black?style=for-the-badge)](https://grade-pilot-gold.vercel.app/) \
-[![Status:](https://img.shields.io/badge/Status-In_Progress-yellow?style=for-the-badge)]()
 
 
 ## My Problem:
@@ -24,7 +23,6 @@ During last year's exam period, I was always anxious about my performance in the
 I didn't have time back then, but now I do. I've created an app that solves everything I need. Currently needs the finishing touches, but if you find it useful, I don't mind you using it either! (Don't make me pay for a database)
 
 ## Design:
-UPDATED DESIGN: Including year information <br/>
 <img width="1000" height="600" alt="Image" src="https://github.com/user-attachments/assets/89db8825-d007-4829-bcb7-c899f2130ce6" />
 Module with no assignments: <br/>
 <img width="1754" height="679" alt="Image" src="https://github.com/user-attachments/assets/8a8821bb-2b6e-45b5-8688-603881c99f92" />
