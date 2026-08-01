@@ -19,8 +19,8 @@ This project is a full-stack application built with the modern, type-safe PERN (
 
 
 ## My Problem:
-During last year's exam period, I was always anxious about my performance in the final exam. I wanted to know exactly what I needed in my exams and coursework to achieve my targets. <br/> <br/> I had to calculate to find out the information. This wasn't ideal, I wanted it to be easy and quick to access. <br/> <br/>
-I didn't have time back then, but now I do. I've created an app that solves everything I need. Currently needs the finishing touches, but if you find it useful, I don't mind you using it either! (Don't make me pay for a database)
+During the exam periods in university, I would always be anxious about my performance in the final exam. I wanted to know exactly what I needed in my exams and coursework to achieve my targets. <br/> <br/> I had to calculate to find out the information myself. This wasn't ideal, I wanted it to be easy and quick to access. <br/> <br/>
+I didn't have time back then, but during the breaks I do. I've created an app that solves everything I need. If you find it useful, I don't mind you using it either! (Don't make me pay for a database)
 
 ## Design:
 <img width="1000" height="600" alt="Image" src="https://github.com/user-attachments/assets/89db8825-d007-4829-bcb7-c899f2130ce6" />
@@ -36,8 +36,8 @@ https://github.com/user-attachments/assets/41bed0ad-65bb-4bde-941c-f6147bd94ea4
 
 
 ## Project Status:
-This project is almost done! The core functionality for user authentication, data management, and the dashboard is more or less complete.
-Future planned features include:
+This project is pretty much done! The core functionality for user authentication, data management, and the dashboard is more or less complete.
+Future planned features include (time permitted):
 A detailed "Overview" page with year-on-year progress to track years at-a-glance.
 The ability for users to edit their core degree information after onboarding.
 More pilot features!
