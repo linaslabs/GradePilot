@@ -2,6 +2,10 @@
 # 🎓 GradePilot - Academic Progress Tracker
 An intelligent, full-stack web application designed to help UK university students track, manage, and predict their academic grades.
 
+## My Problem:
+During the exam periods in university, I would always be anxious about my performance in the final exam. I wanted to know exactly what I needed in my exams and coursework to achieve my targets. <br/> <br/> I had to calculate to find out the information myself. This wasn't ideal, I wanted it to be easy and quick to access. <br/> <br/>
+I didn't have time back then, but during the breaks I do. I've created an app that solves everything I need. If you find it useful, I don't mind you using it either! (Don't make me pay for a database)
+
 ## Tech Stack:
 This project is a full-stack application built with the modern, type-safe PERN (PostgreSQL, Express, React, Node.js) stack.
 
@@ -17,10 +21,6 @@ This project is a full-stack application built with the modern, type-safe PERN (
 
 [![Live Demo:](https://img.shields.io/badge/Live_Demo-Vercel-black?style=for-the-badge)](https://grade-pilot-gold.vercel.app/)
 
-
-## My Problem:
-During the exam periods in university, I would always be anxious about my performance in the final exam. I wanted to know exactly what I needed in my exams and coursework to achieve my targets. <br/> <br/> I had to calculate to find out the information myself. This wasn't ideal, I wanted it to be easy and quick to access. <br/> <br/>
-I didn't have time back then, but during the breaks I do. I've created an app that solves everything I need. If you find it useful, I don't mind you using it either! (Don't make me pay for a database)
 
 ## Design:
 <img width="1000" height="600" alt="Image" src="https://github.com/user-attachments/assets/89db8825-d007-4829-bcb7-c899f2130ce6" />
