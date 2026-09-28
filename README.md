@@ -36,7 +36,8 @@ https://github.com/user-attachments/assets/41bed0ad-65bb-4bde-941c-f6147bd94ea4
 
 
 ## Project Status:
-This project is pretty much done! The core functionality for user authentication, data management, and the dashboard is more or less complete.
+This project being refactored and optimised with **unit testing** via Vitest, **CI/CD** via Github Actions and **containerisation** with Docker. 
+The core functionality for user authentication, data management, and the dashboard is more or less complete.
 Future planned features include (time permitted):
 A detailed "Overview" page with year-on-year progress to track years at-a-glance.
 The ability for users to edit their core degree information after onboarding.
