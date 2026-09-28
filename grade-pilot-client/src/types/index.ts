@@ -7,7 +7,7 @@ export interface Module {
   assignments: {
     id: string;
     title: string;
-    markPercent?: number;
+    markPercent?: number | null;
     weightingPercent: number;
   }[];
 }
@@ -15,7 +15,7 @@ export interface Module {
 export interface AssignmentType {
   id: string;
   title: string;
-  markPercent?: number;
+  markPercent?: number | null;
   weightingPercent: number;
 }
 
@@ -39,7 +39,8 @@ export interface AcademicYearData {
   modules: Module[];
 }
 
-export interface YearSettings { // This is for after the user has configured, the values of YearSettings can no longer be null
+export interface YearSettings {
+  // This is for after the user has configured, the values of YearSettings can no longer be null
   totalCredits: number;
   weightingPercent: number;
   targetMark: number;

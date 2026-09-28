@@ -42,7 +42,7 @@ export function determineModuleCompleteness(
   let complete = true;
 
   assignments.forEach((assignment) => {
-    if (!assignment.markPercent) {
+    if (assignment.markPercent == null) {
       complete = false;
       return complete;
     }
@@ -60,7 +60,7 @@ export function calculateModuleWeights(assignments: AssignmentType[]): number {
   return totalAssignmentsWeight;
 }
 
-function classifyMark(mark: number): string {
+export function classifyMark(mark: number): string {
   if (mark < 40) {
     return 'Fail';
   } else if (mark < 50) {
@@ -158,8 +158,8 @@ export function calculatePilotResponse(
   return finalResponse;
 }
 
-export function yearPilotReached(modules?: Module[], totalCredits?: number) {
-  if (totalCredits == null || !modules)
+export function yearPilotReached(modules?: Module[], assignedCredits?: number) {
+  if (assignedCredits == null || modules == null)
     return { isReached: false, totalModuleCredits: 0 };
 
   let totalModuleCredits = 0;
@@ -167,7 +167,7 @@ export function yearPilotReached(modules?: Module[], totalCredits?: number) {
     totalModuleCredits += module.credits;
   });
 
-  if (totalCredits === totalModuleCredits) {
+  if (assignedCredits === totalModuleCredits) {
     return { isReached: true, totalModuleCredits: totalModuleCredits };
   }
 
@@ -175,6 +175,15 @@ export function yearPilotReached(modules?: Module[], totalCredits?: number) {
 }
 
 export function calculateYearStats(modules: Module[], yearCredits?: number) {
+  if (!yearCredits || yearCredits <= 0 || !modules || modules.length === 0) {
+    return {
+      highestProjected: 0,
+      lowestProjected: 0,
+      projected: 0,
+      isYearCompleted: false,
+    };
+  }
+
   let lowestProjected = 0;
   let projected = 0;
   let highestProjected = 0;
@@ -202,7 +211,7 @@ export function calculateYearStats(modules: Module[], yearCredits?: number) {
       moduleIsComplete = false;
     }
 
-    const moduleMarkWeighting = module.credits / (yearCredits ?? 1);
+    const moduleMarkWeighting = module.credits / yearCredits;
 
     if (moduleIsComplete) {
       moduleCompleteCount++;

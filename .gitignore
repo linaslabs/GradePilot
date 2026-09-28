@@ -10,6 +10,7 @@ node_modules/
 /client/*.local
 /client/.env.local
 /client/.env.*.local
+grade-pilot-client/coverage
 
 # Editor and OS files
 .vscode/
