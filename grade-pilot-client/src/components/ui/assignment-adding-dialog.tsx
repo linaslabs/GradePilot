@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useYearDetails } from '@/contexts/YearDetailsContext';
 import {
@@ -6,14 +6,13 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
   DialogDescription,
 } from '@/components/ui/dialog';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Button } from './button';
 import { Label } from './label';
 import { Input } from './input';
-import type { AssignmentType, Module } from '@/types';
+import type { Module } from '@/types';
 import { calculateModuleWeights } from '@/utils/calculations';
 
 interface AssignmentAddingDialogProps {

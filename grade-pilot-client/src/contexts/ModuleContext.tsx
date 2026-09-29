@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import{ createContext, useContext } from 'react';
 import type { Module } from '@/types';
 
 export const ModuleContext = createContext<Module | undefined>(undefined);

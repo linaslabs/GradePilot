@@ -4,10 +4,16 @@ import React, { useEffect, useState } from 'react';
 export default function Overview() {
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const { token } = useAuth();
-  const [degreeInfo, setDegreeInfo] = useState({});
+  // const [degreeInfo, setDegreeInfo] = useState({});
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    if (!token) {
+      setIsLoading(false);
+      return;
+    }
+
     async function fetchDegree() {
       try {
         const response = await fetch(`${apiUrl}/degree/my-degree`, {
@@ -28,7 +34,7 @@ export default function Overview() {
           );
         }
 
-        setDegreeInfo(data);
+        // setDegreeInfo(data);
       } catch (error) {
         if (error instanceof Error) {
           setError(error.message);
@@ -39,7 +45,15 @@ export default function Overview() {
     }
 
     fetchDegree();
-  }, []);
+  }, [apiUrl, token]);
+
+  if (isLoading) {
+    return (
+      <div className="text-muted-foreground p-4 text-sm">
+        Loading overview...
+      </div>
+    );
+  }
 
   return (
     <>

@@ -1,28 +1,22 @@
-import React, { useState } from 'react';
-import type { AssignmentType, Module } from '@/types';
-import { Button } from './button';
-import { Label } from './label';
-import { Input } from './input';
-import { Trash, Edit } from 'lucide-react';
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import DialogToolTip from './dialogToolTip';
-import Assignment from './assignment';
-import {
-  calculateModuleMark,
-  calculateModuleWeights,
-  determineModuleCompleteness,
-} from '@/utils/calculations';
-import { gradeFormatter } from '@/utils/formatting';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import ModuleInfo from './module-info';
-import { useAuth } from '@/hooks/useAuth';
-import { useYearDetails } from '@/contexts/YearDetailsContext';
 import { ModuleContext } from '@/contexts/ModuleContext';
+import { useYearDetails } from '@/contexts/YearDetailsContext';
+import type { Module } from '@/types';
+import {
+  calculateModuleMark,
+  determineModuleCompleteness,
+} from '@/utils/calculations';
+import { gradeFormatter } from '@/utils/formatting';
+import { Edit, Trash } from 'lucide-react';
+import { useState } from 'react';
+import Assignment from './assignment';
+import { Button } from './button';
+import ModuleInfo from './module-info';
 interface ModuleProp {
   module: Module;
 }

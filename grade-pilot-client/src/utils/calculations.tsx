@@ -1,4 +1,3 @@
-import React from 'react';
 import type { AssignmentType, Module } from '@/types';
 import { gradeFormatter } from './formatting';
 

@@ -6,11 +6,9 @@ import {
   Trophy,
   Weight,
   Settings,
-  Edit,
   MoveHorizontal,
   Info,
   ClipboardCheck,
-  CheckCheckIcon,
   CheckCircle,
 } from 'lucide-react';
 import { GraduationCap } from 'lucide-react';

@@ -1,13 +1,10 @@
 import React from 'react';
 import { useYearDetails } from '@/contexts/YearDetailsContext';
-import { useModule } from '@/contexts/ModuleContext';
 import { MoreVertical } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './dropdown-menu';
 import { Button } from './button';
